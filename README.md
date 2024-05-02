@@ -1,6 +1,5 @@
-# terraform-tfe-module
+# terraform-github-repo
 Module to automate creation of
-* terraform workspace
 * github related resources
   * repo
   * default branch
