@@ -152,3 +152,7 @@ variable "pull_request_bypassers" {
   type    = list(any)
 }
 
+variable create_codeowners {
+  default = true
+  type = bool
+}
