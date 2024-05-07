@@ -34,10 +34,11 @@ locals {
 
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection
 resource "github_branch_protection" "main" {
-  enforce_admins    = var.github_enforce_admins_branch_protection
-  pattern           = var.github_default_branch
+  count          = var.enforce_prs ? 1 : 0
+  enforce_admins = var.github_enforce_admins_branch_protection
+  pattern        = var.github_default_branch
   # push_restrictions = var.github_push_restrictions
-  repository_id     = github_repository.repo.node_id
+  repository_id = github_repository.repo.node_id
   required_pull_request_reviews {
     dismiss_stale_reviews           = var.github_dismiss_stale_reviews
     require_code_owner_reviews      = var.github_require_code_owner_reviews

@@ -1,6 +1,6 @@
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file
 resource "github_repository_file" "codeowners" {
-  count = var.create_codeowners ? 1 : 0
+  count               = var.create_codeowners ? 1 : 0
   repository          = github_repository.repo.name
   branch              = var.github_default_branch
   file                = "CODEOWNERS"
