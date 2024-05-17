@@ -11,7 +11,7 @@ variable "github_codeowners_team" {
 }
 
 variable "github_repo_description" {
-  default = "Terraform Workspace"
+  default = null
 }
 
 variable "github_repo_topics" {
