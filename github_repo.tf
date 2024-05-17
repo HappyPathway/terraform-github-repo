@@ -21,7 +21,10 @@ resource "github_repository" "repo" {
   archived               = var.archived
   lifecycle {
     ignore_changes = [
-      name
+      name,
+      has_issues,
+      has_projects,
+      has_wiki
     ]
   }
   dynamic "template" {
