@@ -2,11 +2,6 @@ locals {
   repo_name = var.force_name ? var.name : "${var.name}-${formatdate("YYYYMMDD", timestamp())}"
 }
 
-moved {
-  from = "github_repository.repo"
-  to   = "github_repository.repo_force_name"
-}
-
 resource "github_repository" "repo_force_name" {
   count                  = var.force_name ? 1 : 0
   name                   = local.repo_name
