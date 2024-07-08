@@ -162,8 +162,8 @@ variable "enforce_prs" {
   type    = bool
 }
 
-variable collaborators {
-  type = map(string)
+variable "collaborators" {
+  type        = map(string)
   description = "list of repo callaborators"
-  default = {}
+  default     = {}
 }

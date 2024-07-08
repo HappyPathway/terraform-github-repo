@@ -3,12 +3,12 @@ locals {
 }
 
 moved {
-  from = github_repository.repo
-  to = github_repository.repo_force_name
+  from = "github_repository.repo"
+  to   = "github_repository.repo_force_name"
 }
 
 resource "github_repository" "repo_force_name" {
-  count = var.force_name ? 1 : 0
+  count                  = var.force_name ? 1 : 0
   name                   = local.repo_name
   description            = var.github_repo_description
   visibility             = var.github_is_private ? "private" : "public"
@@ -45,7 +45,7 @@ resource "github_repository" "repo_force_name" {
 
 
 resource "github_repository" "repo_ignore_name_change" {
-  count = var.force_name ? 0 : 1
+  count                  = var.force_name ? 0 : 1
   name                   = local.repo_name
   description            = var.github_repo_description
   visibility             = var.github_is_private ? "private" : "public"
