@@ -146,6 +146,14 @@ variable "extra_files" {
   description = "Extra Files"
 }
 
+variable "managed_extra_files" {
+  type = list(object({
+    path    = string,
+    content = string
+  }))
+  default     = []
+  description = "Managed Extra Files. Changes to Content will be updated"
+}
 
 variable "pull_request_bypassers" {
   default = []
