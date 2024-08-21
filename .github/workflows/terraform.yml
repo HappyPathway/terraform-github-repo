@@ -14,4 +14,3 @@ jobs:
       github_email: git@roknsound.com
     secrets:
       TFE_TOKEN: ${{ secrets.TFE_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
