@@ -127,7 +127,7 @@ This can extend multiple levels.
 EOT
   type        = object({
     contexts = list(string)
-    strict   = optional(bool, true)
+    strict   = optional(bool, false)
   })
   default     = null
 }
