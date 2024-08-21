@@ -52,11 +52,10 @@ resource "github_branch_protection" "main" {
   }
 
   dynamic "required_status_checks" {
-    # A bogus map for a conditional block
-    for_each = length(var.required_status_checks) > 0 ? ["*"] : []
+    for_each = var.required_status_checks == null ? [] : ["*"]
     content {
-      contexts = var.required_status_checks
-      strict   = true
+      contexts = required_status_checks.value.contexts
+      strict   = required_status_checks.value.strict
     }
   }
 
