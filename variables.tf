@@ -125,11 +125,11 @@ information. For workflows that use reusable workflows,
 the pattern is <initial_workflow.jobs.job.[name/id]> / <reused-workflow.jobs.job.[name/id]>. 
 This can extend multiple levels.
 EOT
-  type        = object({
+  type = object({
     contexts = list(string)
     strict   = optional(bool, false)
   })
-  default     = null
+  default = null
 }
 
 variable "archived" {
@@ -191,4 +191,10 @@ variable "collaborators" {
   type        = map(string)
   description = "list of repo callaborators"
   default     = {}
+}
+
+
+variable "archive_on_destroy" {
+  type    = bool
+  default = true
 }
