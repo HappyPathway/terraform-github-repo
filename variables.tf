@@ -108,20 +108,23 @@ variable "admin_teams" {
   default     = []
 }
 
-# Required Status Checks
-# required_status_checks supports the following arguments:
-# strict: (Optional) Require branches to be up to date before merging. Defaults to false.
-# contexts: (Optional) The list of status checks to require in order to merge into this branch. 
-# No status checks are required by default.
-# Note: This attribute can contain multiple string patterns. If specified, usual value is the job name. 
-# Otherwise, the job id is defaulted to. For workflows that use matrixes, append the matrix name to the 
-# value using the following pattern (<matrix_value>[, <matrix_value>]). Matrixes should be specified 
-# based on the order of matrix properties in the workflow file. See GitHub Documentation for more 
-# information. For workflows that use reusable workflows, 
-# the pattern is <initial_workflow.jobs.job.[name/id]> / <reused-workflow.jobs.job.[name/id]>. 
-# This can extend multiple levels.
+
 variable "required_status_checks" {
-  description = "Required Status Checks"
+  description = <<EOT
+  Required Status Checks
+required_status_checks supports the following arguments:
+
+strict: (Optional) Require branches to be up to date before merging. Defaults to false.
+contexts: (Optional) The list of status checks to require in order to merge into this branch. 
+No status checks are required by default.
+Note: This attribute can contain multiple string patterns. If specified, usual value is the job name. 
+Otherwise, the job id is defaulted to. For workflows that use matrixes, append the matrix name to the 
+value using the following pattern (<matrix_value>[, <matrix_value>]). Matrixes should be specified 
+based on the order of matrix properties in the workflow file. See GitHub Documentation for more 
+information. For workflows that use reusable workflows, 
+the pattern is <initial_workflow.jobs.job.[name/id]> / <reused-workflow.jobs.job.[name/id]>. 
+This can extend multiple levels.
+EOT
   type        = object({
     contexts = list(string)
     strict   = optional(bool, true)
