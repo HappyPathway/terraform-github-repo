@@ -6,6 +6,8 @@ variables {
   name               = "github-repo-test"
   enforce_prs        = false
   archive_on_destroy = false
+  github_org_teams   = []
+  admin_teams        = []
 }
 
 run "repo_tests" {
