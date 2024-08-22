@@ -20,6 +20,7 @@ resource "github_repository" "repo" {
   gitignore_template     = "Terraform"
   is_template            = var.is_template
   archived               = var.archived
+  vulnerability_alerts = var.vulnerability_alerts
   lifecycle {
     ignore_changes = [
       has_issues,
