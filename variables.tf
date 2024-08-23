@@ -199,7 +199,7 @@ variable "archive_on_destroy" {
   default = true
 }
 
-variable vulnerability_alerts {
+variable "vulnerability_alerts" {
   type    = bool
-  default = true
+  default = false
 }
