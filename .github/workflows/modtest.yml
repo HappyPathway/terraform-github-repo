@@ -1,11 +1,9 @@
 name: "ModTest"
 
 on:
-  workflow_dispatch:
   pull_request:
-  push:
     branches:
-      - prod
+      - main
     
 jobs:
   modtest:
