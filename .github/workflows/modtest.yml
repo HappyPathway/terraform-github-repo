@@ -1,6 +1,9 @@
 name: "ModTest"
 
 on:
+  push:
+    branchs:
+      - main
   pull_request:
     branches:
       - main
