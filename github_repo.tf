@@ -4,6 +4,7 @@ locals {
 
 
 resource "github_repository" "repo" {
+  count = 0
   name                   = local.repo_name
   description            = var.github_repo_description
   visibility             = var.github_is_private ? "private" : "public"
