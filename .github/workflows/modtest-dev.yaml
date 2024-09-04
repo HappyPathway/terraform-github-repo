@@ -11,6 +11,7 @@ jobs:
       workspace: dev
       workspace_repo: github-repos
       workspace_branch: main
+      branch: ${{ github.head_ref }}
       repo_clone_type: https
       mod_source: repo/github
 
