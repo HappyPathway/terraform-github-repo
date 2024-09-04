@@ -3,7 +3,7 @@ variables {
   force_name         = true
   github_is_private  = true
   repo_org           = "HappyPathway"
-  name               = "github-repo-test"
+  name               = "github-repo-test-crufty"
   enforce_prs        = false
   archive_on_destroy = false
   github_org_teams   = []
