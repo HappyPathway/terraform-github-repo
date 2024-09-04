@@ -4,8 +4,7 @@ locals {
 
 
 resource "github_repository" "repo" {
-  count = 0
-  name                   = local.repo_name
+  name                   = "${local.repo_name}-crufty"
   description            = var.github_repo_description
   visibility             = var.github_is_private ? "private" : "public"
   auto_init              = var.github_auto_init
