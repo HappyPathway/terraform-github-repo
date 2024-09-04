@@ -2,8 +2,7 @@ name: "ModTest: github-repos"
 
 on:
   pull_request:
-    branches:
-      - main
+  workflow_dispatch:
     
 jobs:
   modtest:
