@@ -27,6 +27,7 @@ resource "github_repository" "repo" {
       has_projects,
       has_wiki
     ]
+    prevent_destroy = var.prevent_destroy
   }
   dynamic "template" {
     # A bogus map for a conditional block
