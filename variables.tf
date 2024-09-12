@@ -203,3 +203,8 @@ variable "vulnerability_alerts" {
   type    = bool
   default = false
 }
+
+variable prevent_destroy {
+  type = bool
+  default = true
+}
