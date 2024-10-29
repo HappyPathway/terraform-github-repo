@@ -24,4 +24,7 @@ resource "github_team_repository" "admin" {
       team_id
     ]
   }
+  depends_on = [
+    github_repository.repo
+  ]
 }
