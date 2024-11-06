@@ -203,3 +203,11 @@ variable "vulnerability_alerts" {
   type    = bool
   default = false
 }
+
+variable gitignore_template {
+  default = null
+}
+
+variable homepage_url {
+  default = null
+}
