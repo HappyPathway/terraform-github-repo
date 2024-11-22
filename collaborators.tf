@@ -8,3 +8,5 @@ resource "github_repository_collaborator" "collaborators" {
     github_repository.repo
   ]
 }
+
+crap
