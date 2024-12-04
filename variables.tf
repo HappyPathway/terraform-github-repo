@@ -226,12 +226,12 @@ EOT
   type = object({
     advanced_security = optional(object({
       status = string
-    }, { status = "disabled" }))
+    }), { status = "disabled" })
     secret_scanning = optional(object({
       status = string
-    }, { status = "disabled" }))
+    }), { status = "disabled" })
     secret_scanning_push_protection = optional(object({
       status = string
-    }, { status = "disabled" }))
+    }), { status = "disabled" })
   })
 }
