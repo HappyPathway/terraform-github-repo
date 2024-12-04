@@ -34,7 +34,7 @@ locals {
 
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection
 resource "github_branch_protection" "main" {
-  count          = var.enforce_prs ? 1 : 0
+  count          = var.enforce_prs && !var.github_is_private ? 1 : 0
   enforce_admins = var.github_enforce_admins_branch_protection
   pattern        = var.github_default_branch
   # push_restrictions = var.github_push_restrictions
