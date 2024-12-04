@@ -4,9 +4,7 @@ resource "github_repository_collaborator" "collaborators" {
   repository = github_repository.repo.name
   username   = each.key
   permission = each.value
-  lifecycle {
-    ignore_changes = [
-      permission
-    ]
-  }
+  depends_on = [
+    github_repository.repo
+  ]
 }

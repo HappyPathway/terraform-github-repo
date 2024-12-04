@@ -17,9 +17,10 @@ resource "github_repository" "repo" {
   has_issues             = var.github_has_issues
   has_wiki               = var.github_has_wiki
   topics                 = var.github_repo_topics
-  gitignore_template     = "Terraform"
+  gitignore_template     = var.gitignore_template
   is_template            = var.is_template
   archived               = var.archived
+  homepage_url           = var.homepage_url
   vulnerability_alerts   = var.vulnerability_alerts
   lifecycle {
     ignore_changes = [

@@ -2,6 +2,9 @@ name: "ModTest: dev"
 
 on:
   pull_request:
+  push:
+    branches:
+      - main
     
 jobs:
   modtest:
