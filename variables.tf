@@ -204,15 +204,15 @@ variable "vulnerability_alerts" {
   default = false
 }
 
-variable gitignore_template {
+variable "gitignore_template" {
   default = null
 }
 
-variable homepage_url {
+variable "homepage_url" {
   default = null
 }
 
-variable security_and_analysis {
+variable "security_and_analysis" {
   description = <<EOT
   Security and Analysis Configuration
 The security_and_analysis block supports the following:
@@ -226,12 +226,12 @@ EOT
   type = object({
     advanced_security = optional(object({
       status = string
-    }, { status = "disabled" })
+    }, { status = "disabled" }))
     secret_scanning = optional(object({
       status = string
-    }, { status = "disabled" })
+    }, { status = "disabled" }))
     secret_scanning_push_protection = optional(object({
       status = string
-    }, { status = "disabled" })
+    }, { status = "disabled" }))
   })
 }
