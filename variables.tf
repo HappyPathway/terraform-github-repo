@@ -234,4 +234,15 @@ EOT
       status = string
     }), { status = "disabled" })
   })
+  default = {
+    advanced_security = {
+      status = "disabled"
+    }
+    secret_scanning = {
+      status = "disabled"
+    }
+    secret_scanning_push_protection = {
+      status = "disabled"
+    }
+  }
 }
