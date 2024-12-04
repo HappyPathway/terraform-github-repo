@@ -211,3 +211,27 @@ variable gitignore_template {
 variable homepage_url {
   default = null
 }
+
+variable security_and_analysis {
+  description = <<EOT
+  Security and Analysis Configuration
+The security_and_analysis block supports the following:
+
+advanced_security - (Optional) The advanced security configuration for the repository. See Advanced Security Configuration below for details. If a repository's visibility is public, advanced security is always enabled and cannot be changed, so this setting cannot be supplied.
+
+secret_scanning - (Optional) The secret scanning configuration for the repository. See Secret Scanning Configuration below for details.
+
+secret_scanning_push_protection - (Optional) The secret scanning push protection configuration for the repository. See Secret Scanning Push Protection Configuration below for details.
+EOT
+  type = object({
+    advanced_security = optional(object({
+      status = string
+    }, { status = "disabled" })
+    secret_scanning = optional(object({
+      status = string
+    }, { status = "disabled" })
+    secret_scanning_push_protection = optional(object({
+      status = string
+    }, { status = "disabled" })
+  })
+}
