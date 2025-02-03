@@ -110,9 +110,26 @@ variable "admin_teams" {
 
 
 variable "required_status_checks" {
-  description = "Required Status Checks"
-  type        = list(any)
-  default     = []
+  description = <<EOT
+  Required Status Checks
+required_status_checks supports the following arguments:
+
+strict: (Optional) Require branches to be up to date before merging. Defaults to false.
+contexts: (Optional) The list of status checks to require in order to merge into this branch. 
+No status checks are required by default.
+Note: This attribute can contain multiple string patterns. If specified, usual value is the job name. 
+Otherwise, the job id is defaulted to. For workflows that use matrixes, append the matrix name to the 
+value using the following pattern (<matrix_value>[, <matrix_value>]). Matrixes should be specified 
+based on the order of matrix properties in the workflow file. See GitHub Documentation for more 
+information. For workflows that use reusable workflows, 
+the pattern is <initial_workflow.jobs.job.[name/id]> / <reused-workflow.jobs.job.[name/id]>. 
+This can extend multiple levels.
+EOT
+  type = object({
+    contexts = list(string)
+    strict   = optional(bool, false)
+  })
+  default = null
 }
 
 variable "archived" {
@@ -146,6 +163,14 @@ variable "extra_files" {
   description = "Extra Files"
 }
 
+variable "managed_extra_files" {
+  type = list(object({
+    path    = string,
+    content = string
+  }))
+  default     = []
+  description = "Managed Extra Files. Changes to Content will be updated"
+}
 
 variable "pull_request_bypassers" {
   default = []
@@ -162,8 +187,62 @@ variable "enforce_prs" {
   type    = bool
 }
 
-variable collaborators {
-  type = map(string)
+variable "collaborators" {
+  type        = map(string)
   description = "list of repo callaborators"
-  default = {}
+  default     = {}
+}
+
+
+variable "archive_on_destroy" {
+  type    = bool
+  default = true
+}
+
+variable "vulnerability_alerts" {
+  type    = bool
+  default = false
+}
+
+variable "gitignore_template" {
+  default = null
+}
+
+variable "homepage_url" {
+  default = null
+}
+
+variable "security_and_analysis" {
+  description = <<EOT
+  Security and Analysis Configuration
+The security_and_analysis block supports the following:
+
+advanced_security - (Optional) The advanced security configuration for the repository. See Advanced Security Configuration below for details. If a repository's visibility is public, advanced security is always enabled and cannot be changed, so this setting cannot be supplied.
+
+secret_scanning - (Optional) The secret scanning configuration for the repository. See Secret Scanning Configuration below for details.
+
+secret_scanning_push_protection - (Optional) The secret scanning push protection configuration for the repository. See Secret Scanning Push Protection Configuration below for details.
+EOT
+  type = object({
+    advanced_security = optional(object({
+      status = string
+    }), { status = "disabled" })
+    secret_scanning = optional(object({
+      status = string
+    }), { status = "disabled" })
+    secret_scanning_push_protection = optional(object({
+      status = string
+    }), { status = "disabled" })
+  })
+  default = {
+    advanced_security = {
+      status = "disabled"
+    }
+    secret_scanning = {
+      status = "disabled"
+    }
+    secret_scanning_push_protection = {
+      status = "disabled"
+    }
+  }
 }

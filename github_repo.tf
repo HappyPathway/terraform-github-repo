@@ -2,6 +2,7 @@ locals {
   repo_name = var.force_name ? var.name : "${var.name}-${formatdate("YYYYMMDD", timestamp())}"
 }
 
+
 resource "github_repository" "repo" {
   name                   = local.repo_name
   description            = var.github_repo_description
@@ -10,18 +11,19 @@ resource "github_repository" "repo" {
   allow_merge_commit     = var.github_allow_merge_commit
   allow_squash_merge     = var.github_allow_squash_merge
   allow_rebase_merge     = var.github_allow_rebase_merge
-  archive_on_destroy     = true
+  archive_on_destroy     = var.archive_on_destroy
   delete_branch_on_merge = var.github_delete_branch_on_merge
   has_projects           = var.github_has_projects
   has_issues             = var.github_has_issues
   has_wiki               = var.github_has_wiki
   topics                 = var.github_repo_topics
-  gitignore_template     = "Terraform"
+  gitignore_template     = var.gitignore_template
   is_template            = var.is_template
   archived               = var.archived
+  homepage_url           = var.homepage_url
+  vulnerability_alerts   = var.vulnerability_alerts
   lifecycle {
     ignore_changes = [
-      name,
       has_issues,
       has_projects,
       has_wiki
