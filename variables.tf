@@ -47,7 +47,7 @@ variable "github_has_projects" {
   default = true
 }
 variable "github_has_issues" {
-  default = false
+  default = true
 }
 variable "github_has_wiki" {
   default = true
