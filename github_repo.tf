@@ -22,13 +22,7 @@ resource "github_repository" "repo" {
   archived               = var.archived
   homepage_url           = var.homepage_url
   vulnerability_alerts   = var.vulnerability_alerts
-  lifecycle {
-    ignore_changes = [
-      has_issues,
-      has_projects,
-      has_wiki
-    ]
-  }
+
   dynamic "template" {
     # A bogus map for a conditional block
     for_each = var.template_repo == null ? [] : ["*"]
