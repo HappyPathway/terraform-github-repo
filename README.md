@@ -45,43 +45,6 @@ module "repository" {
 }
 ```
 
-## Requirements
-
-| Name | Version |
-|------|---------|
-| terraform | >= 1.0.0 |
-| github | >= 5.0.0 |
-
-## Providers
-
-| Name | Version |
-|------|---------|
-| github | >= 5.0.0 |
-
-## Inputs
-
-| Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:--------:|
-| name | Repository name | `string` | n/a | yes |
-| repo_org | GitHub organization name | `string` | n/a | yes |
-| force_name | Force the repository name | `bool` | `false` | no |
-| github_repo_description | Repository description | `string` | `""` | no |
-| github_repo_topics | Repository topics | `list(string)` | `[]` | no |
-| github_is_private | Private repository flag | `bool` | `true` | no |
-| github_has_issues | Enable issues | `bool` | `true` | no |
-| github_has_projects | Enable projects | `bool` | `false` | no |
-| github_has_wiki | Enable wiki | `bool` | `false` | no |
-| vulnerability_alerts | Enable vulnerability alerts | `bool` | `true` | no |
-| gitignore_template | GitIgnore template name | `string` | `null` | no |
-| managed_extra_files | Map of files to manage in the repository | `map(object({ content = string, overwrite = bool }))` | `{}` | no |
-
-## Outputs
-
-| Name | Description |
-|------|-------------|
-| github_repo | The complete GitHub repository object |
-| repo_full_name | The full name of the repository (org/name) |
-
 ## Examples
 
 ### Basic Repository
@@ -155,3 +118,13 @@ terraform test
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details
+
+
+[![Terraform Validation](https://github.com/HappyPathway/terraform-github-repo/actions/workflows/terraform.yaml/badge.svg)](https://github.com/HappyPathway/terraform-github-repo/actions/workflows/terraform.yaml)
+
+
+[![Modtest Dev](https://github.com/HappyPathway/terraform-github-repo/actions/workflows/modtest-dev.yaml/badge.svg)](https://github.com/HappyPathway/terraform-github-repo/actions/workflows/modtest-dev.yaml)
+
+<!-- BEGIN_TF_DOCS -->
+{{ .Content }}
+<!-- END_TF_DOCS -->
