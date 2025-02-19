@@ -102,7 +102,13 @@ variable "github_enforce_admins_branch_protection" {
 }
 
 variable "github_allow_auto_merge" {
-  description = "Allow auto-merging pull requests"
+  description = "Allow pull requests to be automatically merged"
+  type        = bool
+  default     = false
+}
+
+variable "github_has_downloads" {
+  description = "Enable downloads feature"
   type        = bool
   default     = false
 }
@@ -321,4 +327,92 @@ variable "environments" {
     })), [])
   }))
   default = []
+}
+
+variable "github_repo_topics" {
+  description = "List of topics for the repository"
+  type        = list(string)
+  default     = []
+}
+
+variable "license_template" {
+  description = "License template to use for the repository"
+  type        = string
+  default     = null
+}
+
+variable "github_has_downloads" {
+  description = "Enable downloads feature"
+  type        = bool
+  default     = false
+}
+
+variable "github_has_discussions" {
+  description = "Enable discussions feature"
+  type        = bool
+  default     = false
+}
+
+variable "license_template" {
+  description = "License template to use for the repository"
+  type        = string
+  default     = null
+}
+
+variable "github_has_downloads" {
+  description = "Enable downloads feature"
+  type        = bool
+  default     = false
+}
+
+variable "github_has_discussions" {
+  description = "Enable discussions feature"
+  type        = bool
+  default     = false
+}
+
+variable "github_merge_commit_title" {
+  description = "Title for merge commits"
+  type        = string
+  default     = "MERGE_MESSAGE"
+}
+
+variable "github_merge_commit_message" {
+  description = "Message for merge commits"
+  type        = string
+  default     = "PR_TITLE"
+}
+
+variable "github_squash_merge_commit_title" {
+  description = "Title for squash merge commits"
+  type        = string
+  default     = "COMMIT_OR_PR_TITLE"
+}
+
+variable "github_squash_merge_commit_message" {
+  description = "Message for squash merge commits"
+  type        = string
+  default     = "COMMIT_MESSAGES"
+}
+
+variable "github_allow_update_branch" {
+  description = "Allow updating pull request branches"
+  type        = bool
+  default     = true
+}
+
+variable "github_allow_update_branch" {
+  description = "Allow updating pull request branches"
+  type        = bool
+  default     = true
+}
+
+variable "pages_config" {
+  description = "Configuration for GitHub Pages"
+  type = object({
+    branch = optional(string, "gh-pages")
+    path   = optional(string, "/")
+    cname  = optional(string)
+  })
+  default = null
 }

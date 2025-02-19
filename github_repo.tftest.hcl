@@ -1,12 +1,13 @@
 # valid_string_concat.tftest.hcl
 variables {
-  force_name         = true
-  github_is_private  = true
-  repo_org           = "test-org"
-  name               = "test-repo"
-  enforce_prs        = false
+  name               = "github-repo-test"
+  repo_org          = "HappyPathway"
+  force_name        = true
+  github_is_private = true
+  enforce_prs       = false
   archive_on_destroy = false
-  github_org_teams   = []
+  github_org_teams  = []
+  admin_teams       = ["test-team"]
   github_repo_description = "Test repository"
   github_repo_topics = ["test", "terraform"]
   create_repo = true
@@ -39,13 +40,13 @@ variables {
       content = "Test content"
     }
   ]
-  admin_teams = ["test-team"]
 }
 
 run "repo_tests" {
   command = plan
+
   assert {
-    condition     = github_repository.repo.name == "test-repo"
+    condition     = github_repository.repo.name == "github-repo-test"
     error_message = "Github Repo name did not match expected"
   }
 }
@@ -53,7 +54,6 @@ run "repo_tests" {
 run "create_new_repository" {
   command = plan
 
-  // Basic repository checks
   assert {
     condition = module.github_repo[0].name == var.name
     error_message = "Repository name does not match input"
@@ -74,7 +74,6 @@ run "create_new_repository" {
     error_message = "Repository topics should include 'terraform'"
   }
 
-  // Security and analysis checks
   assert {
     condition = module.github_repo[0].security_and_analysis.advanced_security.status == "enabled"
     error_message = "Advanced security should be enabled"

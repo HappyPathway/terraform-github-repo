@@ -35,32 +35,42 @@ locals {
 resource "github_branch_protection" "main" {
   count = (var.enforce_prs && !var.github_is_private) || var.github_is_private ? 1 : 0
 
-  repository_id = local.github_repo.node_id
-  pattern       = var.github_default_branch
-  
-  # Basic protection settings
-  enforce_admins                  = var.github_enforce_admins_branch_protection
+  repository_id                   = local.github_repo.node_id
+  pattern                        = var.github_default_branch
+  enforce_admins                 = var.github_enforce_admins_branch_protection
   allows_deletions               = false
   allows_force_pushes            = false
   require_signed_commits         = true
   required_linear_history        = true
   require_conversation_resolution = true
+  lock_branch                    = false
 
-  required_status_checks {
-    strict = try(var.required_status_checks.strict, false)
-    contexts = try(var.required_status_checks.contexts, [])
+  dynamic "required_status_checks" {
+    for_each = var.required_status_checks != null ? ["true"] : []
+    content {
+      strict   = try(var.required_status_checks.strict, false)
+      contexts = try(var.required_status_checks.contexts, [])
+    }
   }
 
-  required_pull_request_reviews {
-    dismiss_stale_reviews           = var.github_dismiss_stale_reviews
-    restrict_dismissals            = true
-    pull_request_bypassers        = var.pull_request_bypassers
-    require_code_owner_reviews      = var.github_require_code_owner_reviews
-    required_approving_review_count = var.github_required_approving_review_count
+  dynamic "required_pull_request_reviews" {
+    for_each = var.enforce_prs ? ["true"] : []
+    content {
+      dismiss_stale_reviews           = var.github_dismiss_stale_reviews
+      restrict_dismissals            = true
+      require_code_owner_reviews      = var.github_require_code_owner_reviews
+      required_approving_review_count = var.github_required_approving_review_count
+      require_last_push_approval     = true
+    }
   }
 
-  restrict_pushes {
-    push_allowances = var.github_push_restrictions
+  dynamic "push_restrictions" {
+    for_each = length(var.github_push_restrictions) > 0 ? ["true"] : []
+    content {
+      users = var.github_push_restrictions
+      teams = []
+      apps  = []
+    }
   }
 
   lifecycle {
