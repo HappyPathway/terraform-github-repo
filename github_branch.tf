@@ -33,7 +33,7 @@ locals {
 
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection
 resource "github_branch_protection" "main" {
-  count = (var.enforce_prs && !var.github_is_private) || var.github_is_private ? 1 : 0
+  count = var.create_repo && (var.enforce_prs && !var.github_is_private) || var.github_is_private ? 1 : 0
 
   repository_id                   = local.github_repo.node_id
   pattern                         = var.github_default_branch
