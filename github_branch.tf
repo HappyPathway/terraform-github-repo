@@ -8,6 +8,9 @@ resource "github_branch" "branch" {
   count      = var.github_default_branch == "main" ? 0 : 1
   repository = local.github_repo.name
   branch     = var.github_default_branch
+  depends_on = [
+    github_repository.repo
+  ]
 }
 
 
@@ -69,4 +72,8 @@ resource "github_branch_protection" "main" {
       required_status_checks[0].contexts
     ]
   }
+
+  depends_on = [
+    github_branch_default.default_main_branch
+  ]
 }
