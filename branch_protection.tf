@@ -47,5 +47,10 @@ resource "github_branch_protection" "protection" {
     }
   }
 
-  depends_on = [local.repo_exists]
+  depends_on = [
+    local.repo_exists,
+    github_repository_file.codeowners,
+    github_repository_file.extra_files,
+    github_repository_file.managed_extra_files
+  ]
 }

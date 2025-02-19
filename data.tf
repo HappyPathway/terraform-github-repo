@@ -4,6 +4,5 @@ locals {
 
 data "github_repository" "existing" {
   count     = var.create_repo ? 0 : 1
-  name      = var.name
-  full_name = var.repo_org != null ? "${var.repo_org}/${var.name}" : var.name
+  full_name = "${var.repo_org}/${var.name}"
 }
