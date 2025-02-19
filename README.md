@@ -222,5 +222,112 @@ MIT License - see [LICENSE](LICENSE) for details
 [![Modtest Dev](https://github.com/HappyPathway/terraform-github-repo/actions/workflows/modtest-dev.yaml/badge.svg)](https://github.com/HappyPathway/terraform-github-repo/actions/workflows/modtest-dev.yaml)
 
 <!-- BEGIN_TF_DOCS -->
-{{ .Content }}
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_github"></a> [github](#provider\_github) | 6.5.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [github_actions_environment_secret.environment_secrets](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_environment_secret) | resource |
+| [github_actions_environment_variable.environment_variables](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_environment_variable) | resource |
+| [github_actions_secret.secret](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_secret) | resource |
+| [github_actions_variable.variable](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/actions_variable) | resource |
+| [github_branch.branch](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch) | resource |
+| [github_branch_default.default_main_branch](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_default) | resource |
+| [github_branch_protection.main](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection) | resource |
+| [github_repository.repo](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository) | resource |
+| [github_repository_collaborator.collaborators](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_collaborator) | resource |
+| [github_repository_environment.environments](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_environment) | resource |
+| [github_repository_file.codeowners](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file) | resource |
+| [github_repository_file.extra_files](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file) | resource |
+| [github_repository_file.managed_extra_files](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file) | resource |
+| [github_team_repository.admin](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository) | resource |
+| [github_actions_public_key.repo_key](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/actions_public_key) | data source |
+| [github_organization_teams.root_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/organization_teams) | data source |
+| [github_ref.ref](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/ref) | data source |
+| [github_repository.existing](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/repository) | data source |
+| [github_repository.template_repo](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/repository) | data source |
+| [github_team.admin_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team) | data source |
+| [github_user.collaborators](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/user) | data source |
+| [github_user.pull_request_bypassers](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/user) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_additional_codeowners"></a> [additional\_codeowners](#input\_additional\_codeowners) | Additional entries for CODEOWNERS file | `list(string)` | `[]` | no |
+| <a name="input_admin_teams"></a> [admin\_teams](#input\_admin\_teams) | Teams to grant admin access | `list(string)` | `[]` | no |
+| <a name="input_archive_on_destroy"></a> [archive\_on\_destroy](#input\_archive\_on\_destroy) | Archive repository instead of deleting on destroy | `bool` | `true` | no |
+| <a name="input_archived"></a> [archived](#input\_archived) | Archive this repository | `bool` | `false` | no |
+| <a name="input_collaborators"></a> [collaborators](#input\_collaborators) | Map of collaborators and their permission levels | `map(string)` | `{}` | no |
+| <a name="input_create_codeowners"></a> [create\_codeowners](#input\_create\_codeowners) | Create CODEOWNERS file | `bool` | `true` | no |
+| <a name="input_create_repo"></a> [create\_repo](#input\_create\_repo) | Whether to create a new repository or manage an existing one | `bool` | `true` | no |
+| <a name="input_enforce_prs"></a> [enforce\_prs](#input\_enforce\_prs) | Enforce pull request reviews | `bool` | `true` | no |
+| <a name="input_environments"></a> [environments](#input\_environments) | List of GitHub environments to create for the repository | <pre>list(object({<br>    name = string<br>    reviewers = optional(object({<br>      teams = optional(list(string), [])<br>      users = optional(list(string), [])<br>    }), {})<br>    deployment_branch_policy = optional(object({<br>      protected_branches     = optional(bool, true)<br>      custom_branch_policies = optional(bool, false)<br>    }), {})<br>    secrets = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>    vars = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>  }))</pre> | `[]` | no |
+| <a name="input_extra_files"></a> [extra\_files](#input\_extra\_files) | Additional files to create in the repository | <pre>list(object({<br>    path    = string<br>    content = string<br>  }))</pre> | `[]` | no |
+| <a name="input_force_name"></a> [force\_name](#input\_force\_name) | Keep exact repository name (no date suffix) | `bool` | `false` | no |
+| <a name="input_github_allow_auto_merge"></a> [github\_allow\_auto\_merge](#input\_github\_allow\_auto\_merge) | Allow auto-merging pull requests | `bool` | `false` | no |
+| <a name="input_github_allow_merge_commit"></a> [github\_allow\_merge\_commit](#input\_github\_allow\_merge\_commit) | Allow merge commits | `bool` | `false` | no |
+| <a name="input_github_allow_rebase_merge"></a> [github\_allow\_rebase\_merge](#input\_github\_allow\_rebase\_merge) | Allow rebase merging | `bool` | `false` | no |
+| <a name="input_github_allow_squash_merge"></a> [github\_allow\_squash\_merge](#input\_github\_allow\_squash\_merge) | Allow squash merging | `bool` | `true` | no |
+| <a name="input_github_auto_init"></a> [github\_auto\_init](#input\_github\_auto\_init) | Initialize repository with README | `bool` | `true` | no |
+| <a name="input_github_codeowners_team"></a> [github\_codeowners\_team](#input\_github\_codeowners\_team) | n/a | `string` | `"terraform-reviewers"` | no |
+| <a name="input_github_default_branch"></a> [github\_default\_branch](#input\_github\_default\_branch) | Default branch name | `string` | `"main"` | no |
+| <a name="input_github_delete_branch_on_merge"></a> [github\_delete\_branch\_on\_merge](#input\_github\_delete\_branch\_on\_merge) | Delete head branch after merge | `bool` | `true` | no |
+| <a name="input_github_dismiss_stale_reviews"></a> [github\_dismiss\_stale\_reviews](#input\_github\_dismiss\_stale\_reviews) | Dismiss stale pull request approvals | `bool` | `true` | no |
+| <a name="input_github_enforce_admins_branch_protection"></a> [github\_enforce\_admins\_branch\_protection](#input\_github\_enforce\_admins\_branch\_protection) | Enforce branch protection rules on administrators | `bool` | `true` | no |
+| <a name="input_github_has_issues"></a> [github\_has\_issues](#input\_github\_has\_issues) | Enable issues feature | `bool` | `false` | no |
+| <a name="input_github_has_projects"></a> [github\_has\_projects](#input\_github\_has\_projects) | Enable projects feature | `bool` | `true` | no |
+| <a name="input_github_has_wiki"></a> [github\_has\_wiki](#input\_github\_has\_wiki) | Enable wiki feature | `bool` | `true` | no |
+| <a name="input_github_is_private"></a> [github\_is\_private](#input\_github\_is\_private) | Make repository private | `bool` | `true` | no |
+| <a name="input_github_org_teams"></a> [github\_org\_teams](#input\_github\_org\_teams) | Organization teams configuration | `list(any)` | `null` | no |
+| <a name="input_github_push_restrictions"></a> [github\_push\_restrictions](#input\_github\_push\_restrictions) | List of team/user IDs with push access | `list(string)` | `[]` | no |
+| <a name="input_github_repo_description"></a> [github\_repo\_description](#input\_github\_repo\_description) | Repository description | `string` | `null` | no |
+| <a name="input_github_repo_topics"></a> [github\_repo\_topics](#input\_github\_repo\_topics) | Repository topics | `list(string)` | `[]` | no |
+| <a name="input_github_require_code_owner_reviews"></a> [github\_require\_code\_owner\_reviews](#input\_github\_require\_code\_owner\_reviews) | Require code owner review | `bool` | `true` | no |
+| <a name="input_github_required_approving_review_count"></a> [github\_required\_approving\_review\_count](#input\_github\_required\_approving\_review\_count) | Number of approvals needed for pull requests | `number` | `1` | no |
+| <a name="input_gitignore_template"></a> [gitignore\_template](#input\_gitignore\_template) | Gitignore template to use | `string` | `null` | no |
+| <a name="input_homepage_url"></a> [homepage\_url](#input\_homepage\_url) | Repository homepage URL | `string` | `null` | no |
+| <a name="input_is_template"></a> [is\_template](#input\_is\_template) | Make this repository a template | `bool` | `false` | no |
+| <a name="input_managed_extra_files"></a> [managed\_extra\_files](#input\_managed\_extra\_files) | Additional files to manage in the repository | <pre>list(object({<br>    path    = string<br>    content = string<br>  }))</pre> | `[]` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name of the repository | `string` | n/a | yes |
+| <a name="input_prefix"></a> [prefix](#input\_prefix) | Prefix to add to repository name | `string` | `null` | no |
+| <a name="input_pull_request_bypassers"></a> [pull\_request\_bypassers](#input\_pull\_request\_bypassers) | Users/teams that can bypass pull request requirements | `list(string)` | `[]` | no |
+| <a name="input_repo_org"></a> [repo\_org](#input\_repo\_org) | GitHub organization name | `string` | `null` | no |
+| <a name="input_required_status_checks"></a> [required\_status\_checks](#input\_required\_status\_checks) | Required status checks for protected branches | <pre>object({<br>    contexts = list(string)<br>    strict   = optional(bool, false)<br>  })</pre> | `null` | no |
+| <a name="input_secrets"></a> [secrets](#input\_secrets) | GitHub Actions secrets | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_security_and_analysis"></a> [security\_and\_analysis](#input\_security\_and\_analysis) | Security and analysis settings for the repository | <pre>object({<br>    advanced_security = optional(object({<br>      status = string<br>    }), { status = "disabled" })<br>    secret_scanning = optional(object({<br>      status = string<br>    }), { status = "disabled" })<br>    secret_scanning_push_protection = optional(object({<br>      status = string<br>    }), { status = "disabled" })<br>  })</pre> | `null` | no |
+| <a name="input_template_repo"></a> [template\_repo](#input\_template\_repo) | Template repository name | `string` | `null` | no |
+| <a name="input_template_repo_org"></a> [template\_repo\_org](#input\_template\_repo\_org) | Template repository organization | `string` | `null` | no |
+| <a name="input_vars"></a> [vars](#input\_vars) | GitHub Actions variables | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
+| <a name="input_vulnerability_alerts"></a> [vulnerability\_alerts](#input\_vulnerability\_alerts) | Enable Dependabot alerts | `bool` | `false` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_default_branch"></a> [default\_branch](#output\_default\_branch) | Default branch of the repository |
+| <a name="output_full_name"></a> [full\_name](#output\_full\_name) | Full name of the repository in org/repo format |
+| <a name="output_git_clone_url"></a> [git\_clone\_url](#output\_git\_clone\_url) | URL that can be provided to git clone to clone the repository anonymously via the git protocol |
+| <a name="output_github_repo"></a> [github\_repo](#output\_github\_repo) | All attributes of the GitHub repository |
+| <a name="output_html_url"></a> [html\_url](#output\_html\_url) | URL to the repository on GitHub |
+| <a name="output_http_clone_url"></a> [http\_clone\_url](#output\_http\_clone\_url) | URL that can be provided to git clone to clone the repository via HTTPS |
+| <a name="output_node_id"></a> [node\_id](#output\_node\_id) | Node ID of the repository, used for GraphQL API access |
+| <a name="output_repo_id"></a> [repo\_id](#output\_repo\_id) | Repository ID |
+| <a name="output_ssh_clone_url"></a> [ssh\_clone\_url](#output\_ssh\_clone\_url) | URL that can be provided to git clone to clone the repository via SSH |
+| <a name="output_template"></a> [template](#output\_template) | Template repository this repository was created from |
+| <a name="output_topics"></a> [topics](#output\_topics) | List of topics applied to the repository |
+| <a name="output_visibility"></a> [visibility](#output\_visibility) | Whether the repository is private or public |
 <!-- END_TF_DOCS -->
