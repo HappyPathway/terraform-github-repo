@@ -329,40 +329,10 @@ variable "environments" {
   default = []
 }
 
-variable "github_repo_topics" {
-  description = "List of topics for the repository"
-  type        = list(string)
-  default     = []
-}
-
 variable "license_template" {
   description = "License template to use for the repository"
   type        = string
   default     = null
-}
-
-variable "github_has_downloads" {
-  description = "Enable downloads feature"
-  type        = bool
-  default     = false
-}
-
-variable "github_has_discussions" {
-  description = "Enable discussions feature"
-  type        = bool
-  default     = false
-}
-
-variable "license_template" {
-  description = "License template to use for the repository"
-  type        = string
-  default     = null
-}
-
-variable "github_has_downloads" {
-  description = "Enable downloads feature"
-  type        = bool
-  default     = false
 }
 
 variable "github_has_discussions" {
