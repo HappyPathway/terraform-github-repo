@@ -33,35 +33,39 @@ locals {
 
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection
 resource "github_branch_protection" "main" {
-  count          = var.enforce_prs && !var.github_is_private ? 1 : 0
-  enforce_admins = var.github_enforce_admins_branch_protection
-  pattern        = var.github_default_branch
-  # push_restrictions = var.github_push_restrictions
+  count = (var.enforce_prs && !var.github_is_private) || var.github_is_private ? 1 : 0
+
   repository_id = local.github_repo.node_id
+  pattern       = var.github_default_branch
+  
+  # Basic protection settings
+  enforce_admins                  = var.github_enforce_admins_branch_protection
+  allows_deletions               = false
+  allows_force_pushes            = false
+  require_signed_commits         = true
+  required_linear_history        = true
+  require_conversation_resolution = true
+
+  required_status_checks {
+    strict = try(var.required_status_checks.strict, false)
+    contexts = try(var.required_status_checks.contexts, [])
+  }
+
   required_pull_request_reviews {
     dismiss_stale_reviews           = var.github_dismiss_stale_reviews
+    restrict_dismissals            = true
+    pull_request_bypassers        = var.pull_request_bypassers
     require_code_owner_reviews      = var.github_require_code_owner_reviews
     required_approving_review_count = var.github_required_approving_review_count
-    pull_request_bypassers          = local.pull_request_bypassers
   }
+
+  restrict_pushes {
+    push_allowances = var.github_push_restrictions
+  }
+
   lifecycle {
     ignore_changes = [
       required_status_checks[0].contexts
     ]
   }
-
-  dynamic "required_status_checks" {
-    for_each = var.required_status_checks == null ? [] : ["*"]
-    content {
-      contexts = required_status_checks.value.contexts
-      strict   = required_status_checks.value.strict
-    }
-  }
-
-  depends_on = [
-    # first let the automation create the codeowners and backend file then only create branch protection rule
-    # if branch protection rule is created first, codeowners will fail
-    github_repository_file.codeowners,
-    github_repository_file.extra_files
-  ]
 }

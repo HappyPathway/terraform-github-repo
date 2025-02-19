@@ -5,6 +5,9 @@ resource "github_repository_file" "codeowners" {
   branch              = var.github_default_branch
   file                = "CODEOWNERS"
   content             = templatefile("${path.module}/templates/CODEOWNERS", { codeowners = local.codeowners })
+  commit_message      = "Update CODEOWNERS file"
+  commit_author       = "Terraform"
+  commit_email        = "terraform@example.com"
   overwrite_on_create = true
   lifecycle {
     ignore_changes = [
@@ -45,6 +48,9 @@ resource "github_repository_file" "extra_files" {
   branch              = var.github_default_branch
   file                = each.value.path
   content             = each.value.content
+  commit_message      = "Update ${each.value.path}"
+  commit_author       = "Terraform"
+  commit_email        = "terraform@example.com"
   overwrite_on_create = true
   lifecycle {
     ignore_changes = [
@@ -60,6 +66,9 @@ resource "github_repository_file" "managed_extra_files" {
   branch              = var.github_default_branch
   file                = each.value.path
   content             = each.value.content
+  commit_message      = "Update ${each.value.path}"
+  commit_author       = "Terraform"
+  commit_email        = "terraform@example.com"
   overwrite_on_create = true
   lifecycle {
     ignore_changes = [
