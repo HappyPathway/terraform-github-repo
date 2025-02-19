@@ -20,7 +20,7 @@ locals {
 resource "github_branch_protection" "protection" {
   for_each = local.branch_protection_rules
 
-  repository_id           = local.repo_exists.node_id
+  repository_id           = local.github_repo.id
   pattern                 = each.value.pattern
   enforce_admins          = each.value.enforce_admins
   allows_deletions        = try(each.value.allows_deletions, false)
@@ -48,7 +48,7 @@ resource "github_branch_protection" "protection" {
   }
 
   depends_on = [
-    local.repo_exists,
+    github_repository.repo,
     github_repository_file.codeowners,
     github_repository_file.extra_files,
     github_repository_file.managed_extra_files

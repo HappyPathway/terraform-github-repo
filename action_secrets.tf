@@ -1,7 +1,3 @@
-locals {
-  repo_exists = var.create_repo ? github_repository.repo[0] : data.github_repository.existing[0]
-}
-
 resource "github_actions_secret" "secret" {
   for_each        = tomap({ for secret in var.secrets : secret.name => secret.value })
   repository      = local.github_repo.name
