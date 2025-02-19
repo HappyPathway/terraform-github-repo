@@ -405,7 +405,7 @@ variable "require_signed_commits" {
   default     = false
 }
 
-variable require_last_push_approval {
+variable "require_last_push_approval" {
   description = "Require approval from the last pusher"
   type        = bool
   default     = false
