@@ -41,18 +41,6 @@ resource "github_repository" "repo" {
   allow_auto_merge       = var.github_allow_auto_merge
   delete_branch_on_merge = var.github_delete_branch_on_merge
 
-  security_and_analysis {
-    advanced_security {
-      status = try(var.security_and_analysis.advanced_security.status, "disabled")
-    }
-    secret_scanning {
-      status = try(var.security_and_analysis.secret_scanning.status, "disabled")
-    }
-    secret_scanning_push_protection {
-      status = try(var.security_and_analysis.secret_scanning_push_protection.status, "disabled")
-    }
-  }
-
   dynamic "template" {
     for_each = var.template_repo == null ? [] : ["*"]
     content {
