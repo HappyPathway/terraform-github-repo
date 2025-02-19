@@ -9,22 +9,14 @@ locals {
   github_teams     = { for obj in local.github_org_teams : "${obj.slug}" => obj.id }
 }
 
-# data "github_team" "nit_admin" {
-#   slug = "nit"
-# }
-
-# https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository
 resource "github_team_repository" "admin" {
   for_each   = toset(var.admin_teams)
   team_id    = lookup(local.github_teams, each.value)
-  repository = github_repository.repo.name
+  repository = local.github_repo.name
   permission = "admin"
   lifecycle {
     ignore_changes = [
       team_id
     ]
   }
-  depends_on = [
-    github_repository.repo
-  ]
 }

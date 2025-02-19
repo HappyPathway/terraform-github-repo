@@ -1,9 +1,11 @@
 locals {
   repo_name = var.force_name ? var.name : "${var.name}-${formatdate("YYYYMMDD", timestamp())}"
+  
+  github_repo = var.create_repo ? github_repository.repo[0] : data.github_repository.existing[0]
 }
 
-
 resource "github_repository" "repo" {
+  count                  = var.create_repo ? 1 : 0
   name                   = local.repo_name
   description            = var.github_repo_description
   visibility             = var.github_is_private ? "private" : "public"
@@ -24,12 +26,16 @@ resource "github_repository" "repo" {
   vulnerability_alerts   = var.vulnerability_alerts
 
   dynamic "template" {
-    # A bogus map for a conditional block
     for_each = var.template_repo == null ? [] : ["*"]
     content {
       owner      = var.template_repo_org
       repository = var.template_repo
-      # include_all_branches = var.template_include_all_branches
     }
   }
+}
+
+data "github_repository" "existing" {
+  count       = var.create_repo ? 0 : 1
+  name        = local.repo_name
+  full_name   = var.repo_org != null ? "${var.repo_org}/${local.repo_name}" : local.repo_name
 }

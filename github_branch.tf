@@ -1,4 +1,3 @@
-
 # https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team
 # data "github_team" "github_codeowners_team" {
 #   slug = var.github_codeowners_team
@@ -7,7 +6,7 @@
 # not creating main branch because its created by default when repo is created
 resource "github_branch" "branch" {
   count      = var.github_default_branch == "main" ? 0 : 1
-  repository = github_repository.repo.name
+  repository = local.github_repo.name
   branch     = var.github_default_branch
 }
 
@@ -15,7 +14,7 @@ resource "github_branch" "branch" {
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_default
 resource "github_branch_default" "default_main_branch" {
   count      = var.github_default_branch == "main" ? 0 : 1
-  repository = github_repository.repo.name
+  repository = local.github_repo.name
   branch     = var.github_default_branch
   depends_on = [
     github_branch.branch
@@ -38,7 +37,7 @@ resource "github_branch_protection" "main" {
   enforce_admins = var.github_enforce_admins_branch_protection
   pattern        = var.github_default_branch
   # push_restrictions = var.github_push_restrictions
-  repository_id = github_repository.repo.node_id
+  repository_id = local.github_repo.node_id
   required_pull_request_reviews {
     dismiss_stale_reviews           = var.github_dismiss_stale_reviews
     require_code_owner_reviews      = var.github_require_code_owner_reviews

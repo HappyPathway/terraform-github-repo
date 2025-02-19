@@ -212,6 +212,12 @@ variable "homepage_url" {
   default = null
 }
 
+variable "create_repo" {
+  description = "Whether to create a new repository or lookup an existing one"
+  type        = bool
+  default     = true
+}
+
 variable "security_and_analysis" {
   description = <<EOT
   Security and Analysis Configuration
