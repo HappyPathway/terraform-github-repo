@@ -19,14 +19,10 @@ locals {
   )
 }
 
-locals {
-  archived_repo = var.create_repo ? github_repository.repo[0].archived : data.github_repository.existing[0].archived
-}
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection
 resource "github_branch_protection" "protection" {
   for_each = {
-    for k, v in local.branch_protection_rules : k => v
-    if var.enforce_prs && !local.archived_repo
+    for k, v in local.branch_protection_rules : k => v if var.enforce_prs 
   }
 
   repository_id = var.create_repo ? github_repository.repo[0].node_id : data.github_repository.existing[0].node_id
@@ -42,7 +38,7 @@ resource "github_branch_protection" "protection" {
     required_approving_review_count = var.github_required_approving_review_count
     dismiss_stale_reviews           = var.github_dismiss_stale_reviews
     require_code_owner_reviews      = var.github_require_code_owner_reviews
-    require_last_push_approval      = false
+    require_last_push_approval      = var.require_last_push_approval
   }
 
   dynamic "required_status_checks" {

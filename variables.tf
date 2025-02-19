@@ -404,3 +404,9 @@ variable "require_signed_commits" {
   type        = bool
   default     = false
 }
+
+variable require_last_push_approval {
+  description = "Require approval from the last pusher"
+  type        = bool
+  default     = false
+}
