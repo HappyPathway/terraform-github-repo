@@ -38,7 +38,7 @@ locals {
 resource "github_branch_protection" "main" {
   count = var.create_repo && (var.enforce_prs && !var.github_is_private) || var.github_is_private ? 1 : 0
 
-  repository_id                   = github_repository.repo.node_id
+  repository_id                   = github_repository.repo[0].node_id
   pattern                         = var.github_default_branch
   enforce_admins                  = var.github_enforce_admins_branch_protection
   allows_deletions                = false
