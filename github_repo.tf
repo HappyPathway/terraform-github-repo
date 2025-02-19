@@ -1,39 +1,39 @@
 locals {
   repo_name = var.force_name ? var.name : "${var.name}-${formatdate("YYYYMMDD", timestamp())}"
-  
+
   github_repo = var.create_repo ? github_repository.repo[0] : data.github_repository.existing[0]
 
   validate_merge_options = (
-    var.github_allow_merge_commit || 
-    var.github_allow_squash_merge || 
+    var.github_allow_merge_commit ||
+    var.github_allow_squash_merge ||
     var.github_allow_rebase_merge
   ) ? null : file("ERROR: At least one merge option must be enabled")
 }
 
 resource "github_repository" "repo" {
-  count                 = var.create_repo ? 1 : 0
-  name                  = local.repo_name
-  description           = var.github_repo_description
-  visibility            = var.github_is_private ? "private" : "public"
-  has_issues            = var.github_has_issues
-  has_projects          = var.github_has_projects
-  has_wiki              = var.github_has_wiki
-  has_downloads         = var.github_has_downloads
-  auto_init             = var.github_auto_init
-  archive_on_destroy    = var.archive_on_destroy
-  archived              = var.archived
-  vulnerability_alerts  = var.vulnerability_alerts
-  topics                = var.github_repo_topics
-  homepage_url          = var.homepage_url
-  gitignore_template    = var.gitignore_template
-  license_template      = var.license_template
-  is_template           = var.is_template
-  has_discussions       = try(var.github_has_discussions, false)
-  merge_commit_title    = try(var.github_merge_commit_title, "MERGE_MESSAGE")
-  merge_commit_message  = try(var.github_merge_commit_message, "PR_TITLE")
-  squash_merge_commit_title = try(var.github_squash_merge_commit_title, "COMMIT_OR_PR_TITLE")
+  count                       = var.create_repo ? 1 : 0
+  name                        = local.repo_name
+  description                 = var.github_repo_description
+  visibility                  = var.github_is_private ? "private" : "public"
+  has_issues                  = var.github_has_issues
+  has_projects                = var.github_has_projects
+  has_wiki                    = var.github_has_wiki
+  has_downloads               = var.github_has_downloads
+  auto_init                   = var.github_auto_init
+  archive_on_destroy          = var.archive_on_destroy
+  archived                    = var.archived
+  vulnerability_alerts        = var.vulnerability_alerts
+  topics                      = var.github_repo_topics
+  homepage_url                = var.homepage_url
+  gitignore_template          = var.gitignore_template
+  license_template            = var.license_template
+  is_template                 = var.is_template
+  has_discussions             = try(var.github_has_discussions, false)
+  merge_commit_title          = try(var.github_merge_commit_title, "MERGE_MESSAGE")
+  merge_commit_message        = try(var.github_merge_commit_message, "PR_TITLE")
+  squash_merge_commit_title   = try(var.github_squash_merge_commit_title, "COMMIT_OR_PR_TITLE")
   squash_merge_commit_message = try(var.github_squash_merge_commit_message, "COMMIT_MESSAGES")
-  allow_update_branch   = try(var.github_allow_update_branch, true)
+  allow_update_branch         = try(var.github_allow_update_branch, true)
 
   allow_merge_commit     = var.github_allow_merge_commit
   allow_squash_merge     = var.github_allow_squash_merge

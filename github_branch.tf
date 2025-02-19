@@ -36,14 +36,14 @@ resource "github_branch_protection" "main" {
   count = (var.enforce_prs && !var.github_is_private) || var.github_is_private ? 1 : 0
 
   repository_id                   = local.github_repo.node_id
-  pattern                        = var.github_default_branch
-  enforce_admins                 = var.github_enforce_admins_branch_protection
-  allows_deletions               = false
-  allows_force_pushes            = false
-  require_signed_commits         = true
-  required_linear_history        = true
+  pattern                         = var.github_default_branch
+  enforce_admins                  = var.github_enforce_admins_branch_protection
+  allows_deletions                = false
+  allows_force_pushes             = false
+  require_signed_commits          = true
+  required_linear_history         = true
   require_conversation_resolution = true
-  lock_branch                    = false
+  lock_branch                     = false
 
   dynamic "required_status_checks" {
     for_each = var.required_status_checks != null ? ["true"] : []
@@ -57,10 +57,10 @@ resource "github_branch_protection" "main" {
     for_each = var.enforce_prs ? ["true"] : []
     content {
       dismiss_stale_reviews           = var.github_dismiss_stale_reviews
-      restrict_dismissals            = true
+      restrict_dismissals             = true
       require_code_owner_reviews      = var.github_require_code_owner_reviews
       required_approving_review_count = var.github_required_approving_review_count
-      require_last_push_approval     = true
+      require_last_push_approval      = true
     }
   }
 

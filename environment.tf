@@ -1,6 +1,6 @@
 resource "github_repository_environment" "environments" {
   for_each = { for env in var.environments : env.name => env }
-  
+
   environment = each.value.name
   repository  = github_repository.repo[0].name
   reviewers {
@@ -14,7 +14,7 @@ resource "github_repository_environment" "environments" {
 }
 
 resource "github_actions_environment_secret" "environment_secrets" {
-  for_each = { 
+  for_each = {
     for pair in flatten([
       for env in var.environments : [
         for secret in coalesce(env.secrets, []) : {
@@ -30,12 +30,12 @@ resource "github_actions_environment_secret" "environment_secrets" {
   environment     = each.value.env_name
   secret_name     = each.value.name
   plaintext_value = each.value.value
-  
+
   depends_on = [github_repository_environment.environments]
 }
 
 resource "github_actions_environment_variable" "environment_variables" {
-  for_each = { 
+  for_each = {
     for pair in flatten([
       for env in var.environments : [
         for _var in coalesce(env.vars, []) : {
@@ -51,6 +51,6 @@ resource "github_actions_environment_variable" "environment_variables" {
   environment   = each.value.env_name
   variable_name = each.value.name
   value         = each.value.value
-  
+
   depends_on = [github_repository_environment.environments]
 }

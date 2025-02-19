@@ -184,7 +184,7 @@ variable "secrets" {
     name  = string
     value = string
   }))
-  default     = []
+  default = []
   validation {
     condition     = alltrue([for s in var.secrets : can(regex("^[A-Z0-9_]+$", s.name))])
     error_message = "Secret names must contain only uppercase letters, numbers, and underscores."
@@ -197,7 +197,7 @@ variable "vars" {
     name  = string
     value = string
   }))
-  default     = []
+  default = []
   validation {
     condition     = alltrue([for v in var.vars : can(regex("^[A-Z0-9_]+$", v.name))])
     error_message = "Variable names must contain only uppercase letters, numbers, and underscores."
@@ -210,7 +210,7 @@ variable "extra_files" {
     path    = string
     content = string
   }))
-  default     = []
+  default = []
 }
 
 variable "managed_extra_files" {
@@ -219,7 +219,7 @@ variable "managed_extra_files" {
     path    = string
     content = string
   }))
-  default     = []
+  default = []
 }
 
 variable "pull_request_bypassers" {
@@ -296,7 +296,7 @@ variable "security_and_analysis" {
   })
   default = null
   validation {
-    condition     = var.security_and_analysis == null ? true : alltrue([
+    condition = var.security_and_analysis == null ? true : alltrue([
       try(contains(["enabled", "disabled"], var.security_and_analysis.advanced_security.status), true),
       try(contains(["enabled", "disabled"], var.security_and_analysis.secret_scanning.status), true),
       try(contains(["enabled", "disabled"], var.security_and_analysis.secret_scanning_push_protection.status), true)

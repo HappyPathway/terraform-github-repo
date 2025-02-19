@@ -7,7 +7,7 @@ resource "github_actions_secret" "secret" {
   repository      = local.github_repo.name
   secret_name     = each.key
   encrypted_value = base64encode(each.value)
-  
+
   depends_on = [data.github_actions_public_key.repo_key]
 }
 
