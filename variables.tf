@@ -401,12 +401,6 @@ variable "github_allow_update_branch" {
   default     = true
 }
 
-variable "github_allow_update_branch" {
-  description = "Allow updating pull request branches"
-  type        = bool
-  default     = true
-}
-
 variable "pages_config" {
   description = "Configuration for GitHub Pages"
   type = object({
