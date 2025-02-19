@@ -32,17 +32,17 @@ resource "github_branch_protection" "protection" {
   repository_id = var.create_repo ? github_repository.repo[0].node_id : data.github_repository.existing[0].node_id
   pattern       = each.key
 
-  enforce_admins         = var.github_enforce_admins_branch_protection
+  enforce_admins          = var.github_enforce_admins_branch_protection
   required_linear_history = true
   allows_force_pushes     = false
   allows_deletions        = false
-  require_signed_commits = var.require_signed_commits
+  require_signed_commits  = var.require_signed_commits
 
   required_pull_request_reviews {
     required_approving_review_count = var.github_required_approving_review_count
-    dismiss_stale_reviews          = var.github_dismiss_stale_reviews
-    require_code_owner_reviews     = var.github_require_code_owner_reviews
-    require_last_push_approval     = false
+    dismiss_stale_reviews           = var.github_dismiss_stale_reviews
+    require_code_owner_reviews      = var.github_require_code_owner_reviews
+    require_last_push_approval      = false
   }
 
   dynamic "required_status_checks" {

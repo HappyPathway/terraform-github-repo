@@ -78,17 +78,17 @@ run "verify_branch_protection" {
 # Test branch protection with different configurations
 run "verify_branch_protection_with_strict_settings" {
   variables {
-    github_default_branch                  = "main"
-    enforce_prs                            = true
-    github_is_private                      = true
-    github_required_approving_review_count = 2
+    github_default_branch                   = "main"
+    enforce_prs                             = true
+    github_is_private                       = true
+    github_required_approving_review_count  = 2
     github_enforce_admins_branch_protection = true
-    github_dismiss_stale_reviews = true
-    github_require_code_owner_reviews = true
-    require_signed_commits = true
-    pull_request_bypassers = ["test-user"]
+    github_dismiss_stale_reviews            = true
+    github_require_code_owner_reviews       = true
+    require_signed_commits                  = true
+    pull_request_bypassers                  = ["test-user"]
     required_status_checks = {
-      strict = true
+      strict   = true
       contexts = ["test/build", "test/lint"]
     }
   }
@@ -139,13 +139,13 @@ run "verify_branch_protection_with_strict_settings" {
 # Test edge cases for branch protection
 run "verify_branch_protection_with_minimal_settings" {
   variables {
-    enforce_prs = true
-    github_default_branch = "main"
-    github_required_approving_review_count = 0
+    enforce_prs                             = true
+    github_default_branch                   = "main"
+    github_required_approving_review_count  = 0
     github_enforce_admins_branch_protection = false
-    github_dismiss_stale_reviews = false
-    github_require_code_owner_reviews = false
-    required_status_checks = null
+    github_dismiss_stale_reviews            = false
+    github_require_code_owner_reviews       = false
+    required_status_checks                  = null
   }
 
   command = plan
@@ -169,7 +169,7 @@ run "verify_branch_protection_with_minimal_settings" {
 # Test branch protection disabled
 run "verify_branch_protection_disabled" {
   variables {
-    enforce_prs = false
+    enforce_prs           = false
     github_default_branch = "main"
   }
 
@@ -216,9 +216,9 @@ run "verify_action_secrets" {
 # Test repository visibility settings
 run "verify_private_repository" {
   variables {
-    github_is_private = true
+    github_is_private       = true
     github_repo_description = "Private repository test"
-    vulnerability_alerts = true
+    vulnerability_alerts    = true
     security_and_analysis = {
       advanced_security = {
         status = "enabled"
@@ -252,13 +252,13 @@ run "verify_private_repository" {
 
 run "verify_public_repository" {
   variables {
-    github_is_private = false
-    github_repo_description = "Public repository test"
-    vulnerability_alerts = true
-    github_has_wiki = true
-    github_has_issues = true
-    github_has_projects = true
-    github_has_discussions = true
+    github_is_private         = false
+    github_repo_description   = "Public repository test"
+    vulnerability_alerts      = true
+    github_has_wiki           = true
+    github_has_issues         = true
+    github_has_projects       = true
+    github_has_discussions    = true
     github_allow_merge_commit = true
     github_allow_squash_merge = true
     github_allow_rebase_merge = true
@@ -377,8 +377,8 @@ run "verify_security_features_public" {
 # Test archive behavior with branch protection
 run "verify_archive_with_branch_protection" {
   variables {
-    enforce_prs = true
-    archived = true
+    enforce_prs           = true
+    archived              = true
     github_default_branch = "main"
   }
 
@@ -441,10 +441,10 @@ run "verify_outputs" {
 # Test repository settings inheritance
 run "verify_settings_inheritance" {
   variables {
-    name = "test-inheritance"
-    repo_org = "TestOrg"
-    github_is_private = true
-    enforce_prs = true
+    name                                   = "test-inheritance"
+    repo_org                               = "TestOrg"
+    github_is_private                      = true
+    enforce_prs                            = true
     github_required_approving_review_count = 2
     # Don't set other settings to test defaults
   }
@@ -475,26 +475,26 @@ run "verify_settings_inheritance" {
 # Test complete repository configuration
 run "verify_complete_repository_config" {
   variables {
-    name = "test-complete-config"
-    repo_org = "TestOrg"
-    github_is_private = true
-    github_repo_description = "Complete configuration test"
-    github_repo_topics = ["test", "complete", "config"]
-    github_has_issues = true
-    github_has_wiki = true
-    github_has_projects = true
-    github_has_discussions = true
-    github_auto_init = true
-    github_allow_merge_commit = true
-    github_allow_squash_merge = true
-    github_allow_rebase_merge = true
-    github_allow_auto_merge = true
-    github_default_branch = "main"
-    vulnerability_alerts = true
-    enforce_prs = true
-    github_required_approving_review_count = 2
+    name                                    = "test-complete-config"
+    repo_org                                = "TestOrg"
+    github_is_private                       = true
+    github_repo_description                 = "Complete configuration test"
+    github_repo_topics                      = ["test", "complete", "config"]
+    github_has_issues                       = true
+    github_has_wiki                         = true
+    github_has_projects                     = true
+    github_has_discussions                  = true
+    github_auto_init                        = true
+    github_allow_merge_commit               = true
+    github_allow_squash_merge               = true
+    github_allow_rebase_merge               = true
+    github_allow_auto_merge                 = true
+    github_default_branch                   = "main"
+    vulnerability_alerts                    = true
+    enforce_prs                             = true
+    github_required_approving_review_count  = 2
     github_enforce_admins_branch_protection = true
-    require_signed_commits = true
+    require_signed_commits                  = true
     security_and_analysis = {
       advanced_security = {
         status = "enabled"
@@ -506,15 +506,15 @@ run "verify_complete_repository_config" {
         status = "enabled"
       }
     }
-    admin_teams = ["test-team"]  # Changed from "admins" to match real team name
+    admin_teams       = ["test-team"] # Changed from "admins" to match real team name
     template_repo_org = "TestOrg"
-    template_repo = "template-repo"
+    template_repo     = "template-repo"
   }
 
   command = plan
 
   assert {
-    condition     = alltrue([
+    condition = alltrue([
       github_repository.repo[0].name == "test-complete-config",
       github_repository.repo[0].has_issues == true,
       github_repository.repo[0].has_wiki == true,
@@ -523,7 +523,7 @@ run "verify_complete_repository_config" {
       github_repository.repo[0].allow_auto_merge == true,
       github_repository.repo[0].visibility == "private",
       github_repository.repo[0].vulnerability_alerts == true,
-      can(github_repository.repo[0].security_and_analysis[0].advanced_security[0].status) && 
+      can(github_repository.repo[0].security_and_analysis[0].advanced_security[0].status) &&
       github_repository.repo[0].security_and_analysis[0].advanced_security[0].status == "enabled",
       github_repository.repo[0].security_and_analysis[0].secret_scanning[0].status == "enabled",
       github_repository.repo[0].security_and_analysis[0].secret_scanning_push_protection[0].status == "enabled"
