@@ -1,13 +1,13 @@
 locals {
   # Process files only if commit signing is not required or if explicitly allowed
-  should_manage_files = !try(local.repo_exists.require_signed_commits, false) || var.allow_unsigned_files
+  should_manage_files = !try(local.github_repo.require_signed_commits, false) || var.allow_unsigned_files
 }
 
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file
 resource "github_repository_file" "codeowners" {
   count = var.create_codeowners && local.should_manage_files ? 1 : 0
 
-  repository          = local.repo_exists.name
+  repository          = local.github_repo.name
   branch              = var.github_default_branch
   file                = "CODEOWNERS"
   content             = templatefile("${path.module}/templates/CODEOWNERS", { codeowners = local.codeowners })
@@ -52,7 +52,7 @@ locals {
 resource "github_repository_file" "extra_files" {
   for_each = local.should_manage_files ? tomap({ for file in local.extra_files : "${element(split("/", file.path), length(split("/", file.path)) - 1)}" => file }) : {}
 
-  repository          = local.repo_exists.name
+  repository          = local.github_repo.name
   branch              = var.github_default_branch
   file                = each.value.path
   content             = each.value.content
@@ -72,7 +72,7 @@ resource "github_repository_file" "extra_files" {
 resource "github_repository_file" "managed_extra_files" {
   for_each = local.should_manage_files ? tomap({ for file in var.managed_extra_files : "${element(split("/", file.path), length(split("/", file.path)) - 1)}" => file }) : {}
 
-  repository          = local.repo_exists.name
+  repository          = local.github_repo.name
   branch              = var.github_default_branch
   file                = each.value.path
   content             = each.value.content
