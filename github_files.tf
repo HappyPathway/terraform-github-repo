@@ -44,7 +44,7 @@ locals {
 }
 
 resource "github_repository_file" "extra_files" {
-  for_each            = tomap({ for file in local.extra_files : "${element(split("/", file.path), length(split("/", file.path)) - 1)}" => file })
+  for_each = tomap({ for file in local.extra_files : "${element(split("/", file.path), length(split("/", file.path)) - 1)}" => file })
 
   repository          = local.repository_name
   branch              = var.github_default_branch
@@ -63,7 +63,7 @@ resource "github_repository_file" "extra_files" {
 }
 
 resource "github_repository_file" "managed_extra_files" {
-  for_each            = tomap({ for file in var.managed_extra_files : "${element(split("/", file.path), length(split("/", file.path)) - 1)}" => file })
+  for_each = tomap({ for file in var.managed_extra_files : "${element(split("/", file.path), length(split("/", file.path)) - 1)}" => file })
 
   repository          = local.repository_name
   branch              = var.github_default_branch
