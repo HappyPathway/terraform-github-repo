@@ -4,7 +4,7 @@ locals {
       pattern                 = var.github_default_branch
       enforce_admins          = var.github_enforce_admins_branch_protection
       allows_deletions        = false
-      require_signed_commits  = true
+      require_signed_commits  = var.require_signed_commits
       required_linear_history = true
       required_status_checks  = var.required_status_checks
       required_pull_request_reviews = {

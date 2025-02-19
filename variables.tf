@@ -380,3 +380,27 @@ variable "pages_config" {
   })
   default = null
 }
+
+variable "allow_unsigned_files" {
+  description = "Whether to allow file management even when signed commits are required"
+  type        = bool
+  default     = false
+}
+
+variable "commit_author" {
+  description = "The author name to use for file commits"
+  type        = string
+  default     = "Terraform"
+}
+
+variable "commit_email" {
+  description = "The email to use for file commits"
+  type        = string
+  default     = "terraform@example.com"
+}
+
+variable "require_signed_commits" {
+  description = "Whether to require signed commits for the default branch"
+  type        = bool
+  default     = false
+}
