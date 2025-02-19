@@ -64,15 +64,6 @@ resource "github_branch_protection" "main" {
     }
   }
 
-  dynamic "push_restrictions" {
-    for_each = length(var.github_push_restrictions) > 0 ? ["true"] : []
-    content {
-      users = var.github_push_restrictions
-      teams = []
-      apps  = []
-    }
-  }
-
   lifecycle {
     ignore_changes = [
       required_status_checks[0].contexts
