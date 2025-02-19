@@ -1,6 +1,4 @@
 locals {
-  # repo_exists = var.create_repo ? github_repository.repo[0] : data.github_repository.existing[0]
-
   # Process files only if commit signing is not required or if explicitly allowed
   should_manage_files = !try(local.repo_exists.require_signed_commits, false) || var.allow_unsigned_files
 }
