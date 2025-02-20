@@ -1,11 +1,27 @@
+data "github_team" "environment_teams" {
+  for_each = toset(flatten([
+    for env in var.environments : 
+    try(coalesce(env.reviewers.teams, []), [])
+  ]))
+  slug = each.value  # Look up teams by slug (name) instead of ID
+}
+
+data "github_user" "environment_users" {
+  for_each = toset(flatten([
+    for env in var.environments : 
+    try(coalesce(env.reviewers.users, []), [])
+  ]))
+  username = each.value
+}
+
 resource "github_repository_environment" "environments" {
   for_each = { for env in var.environments : env.name => env }
 
   environment = each.value.name
   repository  = github_repository.repo[0].name
   reviewers {
-    teams = try(each.value.reviewers.teams, [])
-    users = try(each.value.reviewers.users, [])
+    teams = [for team_slug in try(each.value.reviewers.teams, []) : data.github_team.environment_teams[team_slug].id]
+    users = [for username in try(each.value.reviewers.users, []) : data.github_user.environment_users[username].id]
   }
   deployment_branch_policy {
     protected_branches     = try(each.value.deployment_branch_policy.protected_branches, true)

@@ -396,7 +396,7 @@ variable "commit_author" {
 variable "commit_email" {
   description = "The email to use for file commits"
   type        = string
-  default     = "terraform@example.com"
+  default     = "terraform@roknsound.com"
 }
 
 variable "require_signed_commits" {
