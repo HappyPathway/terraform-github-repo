@@ -1,14 +1,14 @@
 data "github_team" "environment_teams" {
   for_each = toset(flatten([
-    for env in var.environments : 
+    for env in var.environments :
     try(coalesce(env.reviewers.teams, []), [])
   ]))
-  slug = each.value  # Look up teams by slug (name) instead of ID
+  slug = each.value # Look up teams by slug (name) instead of ID
 }
 
 data "github_user" "environment_users" {
   for_each = toset(flatten([
-    for env in var.environments : 
+    for env in var.environments :
     try(coalesce(env.reviewers.users, []), [])
   ]))
   username = each.value
