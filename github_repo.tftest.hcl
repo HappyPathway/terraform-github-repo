@@ -80,7 +80,7 @@ run "verify_branch_protection_with_strict_settings" {
   variables {
     github_default_branch                   = "main"
     enforce_prs                             = true
-    github_is_private                       = true
+    github_is_private                       = false
     github_required_approving_review_count  = 2
     github_enforce_admins_branch_protection = true
     github_dismiss_stale_reviews            = true
@@ -89,7 +89,7 @@ run "verify_branch_protection_with_strict_settings" {
     pull_request_bypassers                  = ["test-user"]
     required_status_checks = {
       strict   = true
-      contexts = ["test/build", "test/lint"]
+      contexts = try(["test/build", "test/lint"], [])
     }
   }
 
@@ -477,7 +477,7 @@ run "verify_complete_repository_config" {
   variables {
     name                                    = "test-complete-config"
     repo_org                                = "TestOrg"
-    github_is_private                       = true
+    github_is_private                       = false
     github_repo_description                 = "Complete configuration test"
     github_repo_topics                      = ["test", "complete", "config"]
     github_has_issues                       = true
@@ -521,7 +521,7 @@ run "verify_complete_repository_config" {
       github_repository.repo[0].has_projects == true,
       github_repository.repo[0].has_discussions == true,
       github_repository.repo[0].allow_auto_merge == true,
-      github_repository.repo[0].visibility == "private",
+      github_repository.repo[0].visibility == "public",
       github_repository.repo[0].vulnerability_alerts == true,
       can(github_repository.repo[0].security_and_analysis[0].advanced_security[0].status) &&
       github_repository.repo[0].security_and_analysis[0].advanced_security[0].status == "enabled",

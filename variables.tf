@@ -410,3 +410,9 @@ variable "require_last_push_approval" {
   type        = bool
   default     = false
 }
+
+variable github_pro_enabled {
+  type        = bool
+  default     = false
+  description = "Is this a Github Pro Account? If not, then it's limited in feature set"
+} 

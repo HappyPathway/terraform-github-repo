@@ -22,7 +22,7 @@ locals {
 # https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection
 resource "github_branch_protection" "protection" {
   for_each = {
-    for k, v in local.branch_protection_rules : k => v if var.enforce_prs
+    for k, v in local.branch_protection_rules : k => v if var.enforce_prs && (!var.github_is_private || var.github_pro_enabled)
   }
 
   repository_id = var.create_repo ? github_repository.repo[0].node_id : data.github_repository.existing[0].node_id
@@ -45,7 +45,7 @@ resource "github_branch_protection" "protection" {
     for_each = var.required_status_checks != null ? ["true"] : []
     content {
       strict   = try(var.required_status_checks.strict, true)
-      contexts = var.required_status_checks.contexts
+      contexts = try(var.required_status_checks.contexts, [])
     }
   }
 
