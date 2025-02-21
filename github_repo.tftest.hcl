@@ -89,7 +89,7 @@ run "verify_branch_protection_with_strict_settings" {
     pull_request_bypassers                  = ["test-user"]
     required_status_checks = {
       strict   = true
-      contexts = try(["test/build", "test/lint"], [])
+      contexts = ["test/build", "test/lint"]
     }
   }
 
