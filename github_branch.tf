@@ -25,7 +25,7 @@ resource "github_branch" "branch" {
 resource "github_branch_default" "default_main_branch" {
   repository = local.github_repo.name
   branch     = var.github_default_branch
-  
+
   # Only set if not "main"
   lifecycle {
     precondition {
