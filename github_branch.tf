@@ -5,7 +5,7 @@
 
 # Create non-main default branch if specified
 resource "github_branch" "branch" {
-  count = var.github_default_branch != "main" ? 1 : 0
+  count      = var.github_default_branch != "main" ? 1 : 0
   repository = local.github_repo.name
   branch     = var.github_default_branch
   depends_on = [
@@ -15,7 +15,7 @@ resource "github_branch" "branch" {
 
 # Set the default branch
 resource "github_branch_default" "default_main_branch" {
-  count = var.github_default_branch != "main" ? 1 : 0
+  count      = var.github_default_branch != "main" ? 1 : 0
   repository = local.github_repo.name
   branch     = var.github_default_branch
   depends_on = [
