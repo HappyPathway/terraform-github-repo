@@ -5,17 +5,9 @@
 
 # Create non-main default branch if specified
 resource "github_branch" "branch" {
+  count = var.github_default_branch != "main" ? 1 : 0
   repository = local.github_repo.name
   branch     = var.github_default_branch
-
-  # Only create if not "main" and repository exists
-  lifecycle {
-    precondition {
-      condition     = var.github_default_branch != "main"
-      error_message = "Default branch is 'main', skipping branch creation as it's created by default"
-    }
-  }
-
   depends_on = [
     github_repository.repo
   ]
@@ -23,17 +15,9 @@ resource "github_branch" "branch" {
 
 # Set the default branch
 resource "github_branch_default" "default_main_branch" {
+  count = var.github_default_branch != "main" ? 1 : 0
   repository = local.github_repo.name
   branch     = var.github_default_branch
-
-  # Only set if not "main"
-  lifecycle {
-    precondition {
-      condition     = var.github_default_branch != "main"
-      error_message = "Default branch is already 'main', no need to set default"
-    }
-  }
-
   depends_on = [
     github_branch.branch
   ]
