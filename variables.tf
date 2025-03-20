@@ -185,10 +185,6 @@ variable "secrets" {
     value = string
   }))
   default = []
-  validation {
-    condition     = alltrue([for s in var.secrets : can(regex("^[A-Z0-9_]+$", s.name))])
-    error_message = "Secret names must contain only uppercase letters, numbers, and underscores."
-  }
 }
 
 variable "vars" {
@@ -198,10 +194,6 @@ variable "vars" {
     value = string
   }))
   default = []
-  validation {
-    condition     = alltrue([for v in var.vars : can(regex("^[A-Z0-9_]+$", v.name))])
-    error_message = "Variable names must contain only uppercase letters, numbers, and underscores."
-  }
 }
 
 variable "extra_files" {
