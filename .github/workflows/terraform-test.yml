@@ -40,7 +40,11 @@ jobs:
       - name: Check for file changes
         id: check_changes
         run: |
-          git diff --exit-code || echo "changes_detected=true" >> $GITHUB_ENV
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changes_detected=true" >> $GITHUB_ENV
+          else
+            echo "changes_detected=false" >> $GITHUB_ENV
+          fi
 
       - name: Commit and push changes
         if: env.changes_detected == 'true'
@@ -49,7 +53,7 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m "chore: format terraform files"
-          git push origin HEAD:${{ github.event.pull_request.head.ref }}
+          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
       
       - name: Terraform Init
         id: init
