@@ -27,12 +27,6 @@ jobs:
         with:
           fetch-depth: 0
       
-      - name: Setup GitHub CLI
-        run: |
-          # GitHub CLI is pre-installed on GitHub Actions runners
-          # Authenticate GitHub CLI with the provided token
-          echo "${{ secrets.GH_TOKEN }}" | gh auth login --with-token
-      
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
