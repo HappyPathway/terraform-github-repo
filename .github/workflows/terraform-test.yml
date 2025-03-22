@@ -9,6 +9,11 @@ on:
       - main
   workflow_dispatch:
 
+# Set concurrency to prevent overlapping workflow runs
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
