@@ -53,7 +53,16 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add .
           git commit -m "chore: format terraform files"
-          git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+          
+          # Only push directly if we're on the main branch
+          if [[ "${{ github.event_name }}" == "push" ]]; then
+            git push
+          elif [[ "${{ github.event.pull_request.head.repo.fork }}" == "false" ]]; then
+            # Only push to the PR branch if it's from the same repository (not a fork)
+            git push origin "HEAD:${{ github.event.pull_request.head.ref }}"
+          else
+            echo "Changes detected but not pushing to a fork PR. Please update your PR with these formatting changes."
+          fi
       
       - name: Terraform Init
         id: init
