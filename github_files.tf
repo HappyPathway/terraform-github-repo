@@ -15,7 +15,7 @@ resource "github_repository_file" "codeowners" {
   commit_author       = var.commit_author
   commit_email        = var.commit_email
   overwrite_on_create = true
-  depends_on          = [
+  depends_on = [
     github_repository.repo,
     github_branch_protection.protection
   ]
@@ -63,7 +63,7 @@ resource "github_repository_file" "extra_files" {
   commit_author       = var.commit_author
   commit_email        = var.commit_email
   overwrite_on_create = true
-  depends_on          = [
+  depends_on = [
     github_repository.repo,
     github_branch_protection.protection
   ]
@@ -86,7 +86,7 @@ resource "github_repository_file" "managed_extra_files" {
   commit_author       = var.commit_author
   commit_email        = var.commit_email
   overwrite_on_create = true
-  depends_on          = [
+  depends_on = [
     github_repository.repo,
     github_branch_protection.protection
   ]
