@@ -408,3 +408,13 @@ variable "github_pro_enabled" {
   default     = false
   description = "Is this a Github Pro Account? If not, then it's limited in feature set"
 }
+
+variable "deploy_keys" {
+  description = "List of SSH deploy keys to add to the repository"
+  type = list(object({
+    title     = string
+    key       = string
+    read_only = optional(bool, true)
+  }))
+  default = []
+}
