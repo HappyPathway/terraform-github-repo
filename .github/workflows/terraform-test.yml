@@ -28,3 +28,4 @@ jobs:
           working-directory: '.'
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_OWNER: ${{ vars.GH_ORG }}
