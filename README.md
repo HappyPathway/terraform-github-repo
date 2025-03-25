@@ -1,6 +1,6 @@
 # Terraform GitHub Repository Module
 
-A comprehensive Terraform module for managing GitHub repositories with advanced features like branch protection, file management, and team access control. You can use this module to create new repositories or manage existing ones.
+A comprehensive Terraform module for managing GitHub repositories with advanced features like branch protection, file management, team access control, and deployment keys. You can use this module to create new repositories or manage existing ones.
 
 ## Features
 - Create new repositories or manage existing ones
@@ -10,6 +10,7 @@ A comprehensive Terraform module for managing GitHub repositories with advanced 
 - Team access configuration
 - Action secrets management
 - Repository collaborator management
+- Deploy key management
 - Automated README generation
 - Issue management
 
@@ -94,6 +95,30 @@ module "managed_repo" {
       overwrite = false
     }
   }
+}
+```
+
+### Repository with Deploy Keys
+
+```hcl
+module "repo_with_deploy_keys" {
+  source = "HappyPathway/repo/github"
+  
+  name     = "my-project-with-deploy-keys"
+  repo_org = "MyOrganization"
+  
+  deploy_keys = [
+    {
+      title     = "CI Server Key"
+      key       = "ssh-rsa AAAAB3NzaC1yc2EAAA..."
+      read_only = true  # Default is true, can be omitted
+    },
+    {
+      title     = "Deploy Server Key"
+      key       = "ssh-rsa AAAAB3NzaC1yc2EBBB..."
+      read_only = false  # Write access for deployment
+    }
+  ]
 }
 ```
 
@@ -327,6 +352,7 @@ No modules.
 | <a name="input_template_repo_org"></a> [template\_repo\_org](#input\_template\_repo\_org) | Template repository organization | `string` | `null` | no |
 | <a name="input_vars"></a> [vars](#input\_vars) | GitHub Actions variables | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_vulnerability_alerts"></a> [vulnerability\_alerts](#input\_vulnerability\_alerts) | Enable Dependabot alerts | `bool` | `false` | no |
+| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title     = string<br>    key       = string<br>    read_only = optional(bool, true)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
