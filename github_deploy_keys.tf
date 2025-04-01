@@ -4,7 +4,7 @@ resource "tls_private_key" "deploy_key" {
     for k, v in var.deploy_keys : k => v
     if v.create == true
   }
-  
+
   algorithm = "RSA"
   rsa_bits  = 4096
 }

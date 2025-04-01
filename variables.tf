@@ -412,13 +412,13 @@ variable "github_pro_enabled" {
 variable "deploy_keys" {
   description = "List of SSH deploy keys to add to the repository"
   type = list(object({
-    title     = string
-    key       = optional(string, "")
+    title = string
+    key   = optional(string, "")
     # The key is optional because it can be generated
     # by the module itself if create is set to true
     # and the key is not provided
     read_only = optional(bool, true)
-    create = optional(bool, false)
+    create    = optional(bool, false)
   }))
   default = []
 }
