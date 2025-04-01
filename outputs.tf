@@ -57,3 +57,12 @@ output "template" {
   description = "Template repository this repository was created from"
   value       = local.github_repo.template
 }
+
+
+output "generated_deploy_keys" {
+  description = "Generated private keys for deploy keys with create=true"
+  value = {
+    for k, v in tls_private_key.deploy_key : k => v.private_key_pem
+  }
+  sensitive = true
+}
