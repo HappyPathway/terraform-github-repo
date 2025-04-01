@@ -256,6 +256,7 @@ No requirements.
 | Name | Version |
 |------|---------|
 | <a name="provider_github"></a> [github](#provider\_github) | 6.6.0 |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | 4.0.6 |
 
 ## Modules
 
@@ -274,11 +275,13 @@ No modules.
 | [github_branch_protection.protection](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection) | resource |
 | [github_repository.repo](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository) | resource |
 | [github_repository_collaborator.collaborators](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_collaborator) | resource |
+| [github_repository_deploy_key.deploy_key](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_deploy_key) | resource |
 | [github_repository_environment.environments](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_environment) | resource |
 | [github_repository_file.codeowners](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file) | resource |
 | [github_repository_file.extra_files](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file) | resource |
 | [github_repository_file.managed_extra_files](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_file) | resource |
 | [github_team_repository.admin](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository) | resource |
+| [tls_private_key.deploy_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [github_organization_teams.root_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/organization_teams) | data source |
 | [github_repository.existing](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/repository) | data source |
 | [github_team.admin_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team) | data source |
@@ -301,6 +304,7 @@ No modules.
 | <a name="input_commit_email"></a> [commit\_email](#input\_commit\_email) | The email to use for file commits | `string` | `"terraform@roknsound.com"` | no |
 | <a name="input_create_codeowners"></a> [create\_codeowners](#input\_create\_codeowners) | Create CODEOWNERS file | `bool` | `true` | no |
 | <a name="input_create_repo"></a> [create\_repo](#input\_create\_repo) | Whether to create a new repository or manage an existing one | `bool` | `true` | no |
+| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title     = string<br>    key       = optional(string, "")<br>    # The key is optional because it can be generated<br>    # by the module itself if create is set to true<br>    # and the key is not provided<br>    read_only = optional(bool, true)<br>    create = optional(bool, false)<br>  }))</pre> | `[]` | no |
 | <a name="input_enforce_prs"></a> [enforce\_prs](#input\_enforce\_prs) | Enforce pull request reviews | `bool` | `true` | no |
 | <a name="input_environments"></a> [environments](#input\_environments) | List of GitHub environments to create for the repository | <pre>list(object({<br>    name = string<br>    reviewers = optional(object({<br>      teams = optional(list(string), [])<br>      users = optional(list(string), [])<br>    }), {})<br>    deployment_branch_policy = optional(object({<br>      protected_branches     = optional(bool, true)<br>      custom_branch_policies = optional(bool, false)<br>    }), {})<br>    secrets = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>    vars = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>  }))</pre> | `[]` | no |
 | <a name="input_extra_files"></a> [extra\_files](#input\_extra\_files) | Additional files to create in the repository | <pre>list(object({<br>    path    = string<br>    content = string<br>  }))</pre> | `[]` | no |
@@ -352,7 +356,6 @@ No modules.
 | <a name="input_template_repo_org"></a> [template\_repo\_org](#input\_template\_repo\_org) | Template repository organization | `string` | `null` | no |
 | <a name="input_vars"></a> [vars](#input\_vars) | GitHub Actions variables | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_vulnerability_alerts"></a> [vulnerability\_alerts](#input\_vulnerability\_alerts) | Enable Dependabot alerts | `bool` | `false` | no |
-| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title     = string<br>    key       = string<br>    read_only = optional(bool, true)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
@@ -360,6 +363,7 @@ No modules.
 |------|-------------|
 | <a name="output_default_branch"></a> [default\_branch](#output\_default\_branch) | Default branch of the repository |
 | <a name="output_full_name"></a> [full\_name](#output\_full\_name) | Full name of the repository in org/repo format |
+| <a name="output_generated_deploy_keys"></a> [generated\_deploy\_keys](#output\_generated\_deploy\_keys) | Generated private keys for deploy keys with create=true |
 | <a name="output_git_clone_url"></a> [git\_clone\_url](#output\_git\_clone\_url) | URL that can be provided to git clone to clone the repository anonymously via the git protocol |
 | <a name="output_github_repo"></a> [github\_repo](#output\_github\_repo) | All attributes of the GitHub repository |
 | <a name="output_html_url"></a> [html\_url](#output\_html\_url) | URL to the repository on GitHub |
