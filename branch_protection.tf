@@ -53,7 +53,7 @@ resource "github_branch_protection" "protection" {
     github_repository.repo,
     github_branch.branch,
     github_branch_default.default_main_branch,
-    github_repository_files.extra_files,
+    github_repository_file.extra_files,
     github_repository_file.codeowners,
     github_repository_file.managed_extra_files
   ]
