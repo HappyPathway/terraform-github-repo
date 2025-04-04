@@ -24,7 +24,7 @@ locals {
 resource "github_team_repository" "admin" {
   for_each   = { for team in var.admin_teams : team => data.github_team.admin_teams[team].id }
   team_id    = each.value
-  repository = local.github_repo.name
+  repository = var.create_repo ? github_repository.repo[0].name : data.github_repository.existing[0].name
   permission = "admin"
 
   lifecycle {

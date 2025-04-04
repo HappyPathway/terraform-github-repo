@@ -17,7 +17,7 @@ data "github_user" "collaborators" {
 # Add a collaborator to a repository
 resource "github_repository_collaborator" "collaborators" {
   for_each   = tomap(var.collaborators)
-  repository = local.github_repo.name
+  repository = var.create_repo ? github_repository.repo[0].name : data.github_repository.existing[0].name
   username   = each.key
   permission = local.permission_map[each.value]
 

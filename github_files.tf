@@ -26,13 +26,17 @@ resource "github_repository_file" "codeowners" {
   }
 }
 
+locals {
+  lookup_sha = var.template_repo == null ? 0 : var.template_repo_org == var.repo_org ? 1 : 0
+}
+
 data "github_repository" "template_repo" {
-  count     = var.template_repo == null && var.template_repo_org == var.repo_org ? 0 : 1
+  count     = local.lookup_sha
   full_name = "${var.template_repo_org == null ? "" : var.template_repo_org}/${var.template_repo == null ? "" : var.template_repo}"
 }
 
 data "github_ref" "ref" {
-  count      = var.template_repo == null && var.template_repo_org == var.repo_org ? 0 : 1
+  count      = local.lookup_sha
   owner      = var.template_repo_org
   repository = var.template_repo
   ref        = "heads/${element(data.github_repository.template_repo, 0).default_branch}"
@@ -41,7 +45,7 @@ data "github_ref" "ref" {
 locals {
   extra_files = concat(
     var.extra_files,
-    var.template_repo == null && var.template_repo_org == var.repo_org ? [] : [
+    local.lookup_sha == 1 ? [] : [
       {
         path    = ".TEMPLATE_SHA",
         content = data.github_ref.ref[0].sha
