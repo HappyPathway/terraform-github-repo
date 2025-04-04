@@ -356,6 +356,7 @@ No modules.
 | <a name="input_template_repo_org"></a> [template\_repo\_org](#input\_template\_repo\_org) | Template repository organization | `string` | `null` | no |
 | <a name="input_vars"></a> [vars](#input\_vars) | GitHub Actions variables | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_vulnerability_alerts"></a> [vulnerability\_alerts](#input\_vulnerability\_alerts) | Enable Dependabot alerts | `bool` | `false` | no |
+| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title     = string<br>    key       = string<br>    read_only = optional(bool, true)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 

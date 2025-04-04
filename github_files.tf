@@ -27,27 +27,27 @@ resource "github_repository_file" "codeowners" {
   }
 }
 
-# data "github_repository" "template_repo" {
-#   count     = var.template_repo == null && var.template_repo_org == var.repo_org ? 0 : 1
-#   full_name = "${var.template_repo_org == null ? "" : var.template_repo_org}/${var.template_repo == null ? "" : var.template_repo}"
-# }
+data "github_repository" "template_repo" {
+  count     = var.template_repo == null && var.template_repo_org == var.repo_org ? 0 : 1
+  full_name = "${var.template_repo_org == null ? "" : var.template_repo_org}/${var.template_repo == null ? "" : var.template_repo}"
+}
 
-# data "github_ref" "ref" {
-#   count      = var.template_repo == null && var.template_repo_org == var.repo_org ? 0 : 1
-#   owner      = var.template_repo_org
-#   repository = var.template_repo
-#   ref        = "heads/${element(data.github_repository.template_repo, 0).default_branch}"
-# }
+data "github_ref" "ref" {
+  count      = var.template_repo == null && var.template_repo_org == var.repo_org ? 0 : 1
+  owner      = var.template_repo_org
+  repository = var.template_repo
+  ref        = "heads/${element(data.github_repository.template_repo, 0).default_branch}"
+}
 
 locals {
   extra_files = concat(
     var.extra_files,
-    # var.template_repo == null && var.template_repo_org == var.repo_org ? [] : [
-    #   {
-    #     path    = ".TEMPLATE_SHA",
-    #     content = data.github_ref.ref[0].sha
-    #   }
-    # ]
+    var.template_repo == null && var.template_repo_org == var.repo_org ? [] : [
+      {
+        path    = ".TEMPLATE_SHA",
+        content = data.github_ref.ref[0].sha
+      }
+    ]
   )
   repository_name = var.create_repo ? local.github_repo.name : var.name
 }
