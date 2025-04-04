@@ -45,10 +45,10 @@ data "github_ref" "ref" {
 locals {
   extra_files = concat(
     var.extra_files,
-    local.lookup_sha == 1 && length(data.github_ref.ref) > 0 ? [] : [
+    local.lookup_sha == 1 && length(data.github_ref.ref) > 0 && data.github_ref.ref[0] != null ? [] : [
       {
         path    = ".TEMPLATE_SHA",
-        content = data.github_ref.ref[0].sha
+        content = local.lookup_sha == 1 && length(data.github_ref.ref) > 0 ? data.github_ref.ref[0].sha : ""
       }
     ]
   )
