@@ -63,8 +63,7 @@ resource "github_repository_file" "extra_files" {
   commit_email        = var.commit_email
   overwrite_on_create = true
   depends_on = [
-    github_repository.repo,
-    github_branch_protection.protection
+    github_repository.repo
   ]
   lifecycle {
     ignore_changes = [
