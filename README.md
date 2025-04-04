@@ -283,7 +283,9 @@ No modules.
 | [github_team_repository.admin](https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository) | resource |
 | [tls_private_key.deploy_key](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/private_key) | resource |
 | [github_organization_teams.root_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/organization_teams) | data source |
+| [github_ref.ref](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/ref) | data source |
 | [github_repository.existing](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/repository) | data source |
+| [github_repository.template_repo](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/repository) | data source |
 | [github_team.admin_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team) | data source |
 | [github_team.environment_teams](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team) | data source |
 | [github_user.collaborators](https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/user) | data source |
@@ -304,7 +306,7 @@ No modules.
 | <a name="input_commit_email"></a> [commit\_email](#input\_commit\_email) | The email to use for file commits | `string` | `"terraform@roknsound.com"` | no |
 | <a name="input_create_codeowners"></a> [create\_codeowners](#input\_create\_codeowners) | Create CODEOWNERS file | `bool` | `true` | no |
 | <a name="input_create_repo"></a> [create\_repo](#input\_create\_repo) | Whether to create a new repository or manage an existing one | `bool` | `true` | no |
-| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title     = string<br>    key       = optional(string, "")<br>    # The key is optional because it can be generated<br>    # by the module itself if create is set to true<br>    # and the key is not provided<br>    read_only = optional(bool, true)<br>    create = optional(bool, false)<br>  }))</pre> | `[]` | no |
+| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title = string<br>    key   = optional(string, "")<br>    # The key is optional because it can be generated<br>    # by the module itself if create is set to true<br>    # and the key is not provided<br>    read_only = optional(bool, true)<br>    create    = optional(bool, false)<br>  }))</pre> | `[]` | no |
 | <a name="input_enforce_prs"></a> [enforce\_prs](#input\_enforce\_prs) | Enforce pull request reviews | `bool` | `true` | no |
 | <a name="input_environments"></a> [environments](#input\_environments) | List of GitHub environments to create for the repository | <pre>list(object({<br>    name = string<br>    reviewers = optional(object({<br>      teams = optional(list(string), [])<br>      users = optional(list(string), [])<br>    }), {})<br>    deployment_branch_policy = optional(object({<br>      protected_branches     = optional(bool, true)<br>      custom_branch_policies = optional(bool, false)<br>    }), {})<br>    secrets = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>    vars = optional(list(object({<br>      name  = string<br>      value = string<br>    })), [])<br>  }))</pre> | `[]` | no |
 | <a name="input_extra_files"></a> [extra\_files](#input\_extra\_files) | Additional files to create in the repository | <pre>list(object({<br>    path    = string<br>    content = string<br>  }))</pre> | `[]` | no |
@@ -356,7 +358,6 @@ No modules.
 | <a name="input_template_repo_org"></a> [template\_repo\_org](#input\_template\_repo\_org) | Template repository organization | `string` | `null` | no |
 | <a name="input_vars"></a> [vars](#input\_vars) | GitHub Actions variables | <pre>list(object({<br>    name  = string<br>    value = string<br>  }))</pre> | `[]` | no |
 | <a name="input_vulnerability_alerts"></a> [vulnerability\_alerts](#input\_vulnerability\_alerts) | Enable Dependabot alerts | `bool` | `false` | no |
-| <a name="input_deploy_keys"></a> [deploy\_keys](#input\_deploy\_keys) | List of SSH deploy keys to add to the repository | <pre>list(object({<br>    title     = string<br>    key       = string<br>    read_only = optional(bool, true)<br>  }))</pre> | `[]` | no |
 
 ## Outputs
 
