@@ -50,6 +50,9 @@ output "default_branch" {
   )
 }
 
+# resource "github_branch_default" "default_main_branch" {
+#   count      = var.github_default_branch != "main" ? 1 : 0 
+
 output "topics" {
   description = "List of topics applied to the repository"
   value       = var.create_repo ? github_repository.repo[0].topics : data.github_repository.existing[0].topics
