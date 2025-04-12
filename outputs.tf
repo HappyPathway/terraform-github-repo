@@ -45,7 +45,7 @@ output "visibility" {
 
 output "default_branch" {
   description = "Default branch of the repository"
-  value       = var.create_repo ? var.github_default_branch : (
+  value = var.create_repo ? var.github_default_branch : (
     length(data.github_repository.existing) > 0 ? lookup(data.github_repository.existing[0], "default_branch", "main") : "main"
   )
 }
