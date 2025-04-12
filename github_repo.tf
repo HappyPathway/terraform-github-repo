@@ -1,7 +1,10 @@
 locals {
   repo_name = var.force_name ? var.name : "${var.name}-${formatdate("YYYYMMDD", timestamp())}"
 
-  github_repo = var.create_repo ? github_repository.repo[0] : data.github_repository.existing[0]
+  # Safe access to repo and existing resources
+  github_repo = var.create_repo && length(github_repository.repo) > 0 ? github_repository.repo[0] : (
+    length(data.github_repository.existing) > 0 ? data.github_repository.existing[0] : null
+  )
 
   validate_merge_options = (
     var.github_allow_merge_commit ||
