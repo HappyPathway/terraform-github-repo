@@ -365,7 +365,6 @@ No modules.
 |------|-------------|
 | <a name="output_default_branch"></a> [default\_branch](#output\_default\_branch) | Default branch of the repository |
 | <a name="output_full_name"></a> [full\_name](#output\_full\_name) | Full name of the repository in org/repo format |
-| <a name="output_generated_deploy_keys"></a> [generated\_deploy\_keys](#output\_generated\_deploy\_keys) | Generated private keys for deploy keys with create=true |
 | <a name="output_git_clone_url"></a> [git\_clone\_url](#output\_git\_clone\_url) | URL that can be provided to git clone to clone the repository anonymously via the git protocol |
 | <a name="output_github_repo"></a> [github\_repo](#output\_github\_repo) | All attributes of the GitHub repository |
 | <a name="output_html_url"></a> [html\_url](#output\_html\_url) | URL to the repository on GitHub |
