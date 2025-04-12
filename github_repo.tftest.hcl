@@ -507,8 +507,8 @@ run "verify_complete_repository_config" {
       }
     }
     admin_teams       = ["test-team"] # Changed from "admins" to match real team name
-    template_repo_org = "TestOrg"
-    template_repo     = "template-repo"
+    template_repo_org = "HappyPathway"
+    template_repo     = "template-dockerhub-container-workspace"
   }
 
   command = plan
