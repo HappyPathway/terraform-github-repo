@@ -39,7 +39,7 @@ data "github_ref" "ref" {
   count      = local.lookup_sha
   owner      = var.template_repo_org
   repository = var.template_repo
-  ref        = "heads/${element(data.github_repository.template_repo, 0).default_branch}"
+  ref        = "heads/${local.lookup_sha > 0 && length(data.github_repository.template_repo) > 0 ? coalesce(lookup(data.github_repository.template_repo[0], "default_branch", "main"), "main") : "main"}"
 }
 
 locals {
