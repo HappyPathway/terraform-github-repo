@@ -80,6 +80,13 @@ variable "github_default_branch" {
   type        = string
   default     = "main"
 }
+
+variable "files_branch" {
+  description = "Branch to manage files on"
+  type        = string
+  default     = null
+}
+
 variable "github_required_approving_review_count" {
   description = "Number of approvals needed for pull requests"
   type        = number
